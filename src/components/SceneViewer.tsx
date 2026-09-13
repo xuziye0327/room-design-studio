@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Proposal } from '../data/proposals.ts'
+import { useMediaQuery } from '../hooks/useMediaQuery.ts'
 import { VIEW_PRESETS } from '../scene/projection.ts'
 import type { ViewPreset } from '../scene/projection.ts'
 import Icon from './Icon.tsx'
@@ -13,6 +14,42 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
   const [view, setView] = useState<ViewPreset | null>('overview')
   const [autoRotate, setAutoRotate] = useState(false)
   const [cutaway, setCutaway] = useState(true)
+  const [fullscreen, setFullscreen] = useState(false)
+  const [fullscreenMessage, setFullscreenMessage] = useState('')
+  const container = useRef<HTMLElement | null>(null)
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const touchInput = useMediaQuery('(pointer: coarse)')
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const pauseWhenHidden = () => {
+      if (document.hidden) setAutoRotate(false)
+    }
+    const pauseForPreference = () => {
+      if (preference.matches) setAutoRotate(false)
+    }
+    const updateFullscreen = () =>
+      setFullscreen(document.fullscreenElement === container.current)
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+    document.addEventListener('fullscreenchange', updateFullscreen)
+    preference.addEventListener('change', pauseForPreference)
+    return () => {
+      document.removeEventListener('visibilitychange', pauseWhenHidden)
+      document.removeEventListener('fullscreenchange', updateFullscreen)
+      preference.removeEventListener('change', pauseForPreference)
+    }
+  }, [])
+
+  const toggleFullscreen = async () => {
+    setFullscreenMessage('')
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen()
+      else await container.current!.requestFullscreen()
+    } catch {
+      setFullscreenMessage('请再次点击全屏按钮以打开完整视图。')
+    }
+  }
+
   const selectView = (value: ViewPreset) => {
     setView(value)
     setAutoRotate(false)
@@ -25,21 +62,34 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
 
   return (
     <section
+      ref={container}
       className="scene-viewer glass-panel"
       aria-label={`${proposal.name} 3D 查看器`}
+      onFocusCapture={() => setAutoRotate(false)}
     >
       <div className="drawing-heading">
         <h2>
           <Icon name="cube" />
           3D 空间预览
         </h2>
-        <span className="view-label">正交投影 · 单位 cm</span>
+        <div className="drawing-actions">
+          <span className="view-label">正交投影 · 单位 cm</span>
+          <button
+            type="button"
+            className="icon-button"
+            aria-label={fullscreen ? '退出全屏' : '全屏查看'}
+            title={fullscreen ? '退出全屏' : '全屏查看'}
+            onClick={toggleFullscreen}
+          >
+            <Icon name={fullscreen ? 'close' : 'expand'} />
+          </button>
+        </div>
       </div>
       <div className="viewer-viewport" data-testid="viewer-viewport">
         <RoomCanvas
           proposal={proposal}
           interactive
-          autoRotate={autoRotate}
+          autoRotate={autoRotate && !reducedMotion}
           cutaway={cutaway}
           actions={actions}
           scaleElement={scaleElement}
@@ -76,7 +126,10 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
             className="icon-button"
             aria-label="放大"
             title="放大"
-            onClick={() => actions.current?.zoom(1.2)}
+            onClick={() => {
+              setAutoRotate(false)
+              actions.current?.zoom(1.2)
+            }}
           >
             <Icon name="plus" />
           </button>
@@ -85,7 +138,10 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
             className="icon-button"
             aria-label="缩小"
             title="缩小"
-            onClick={() => actions.current?.zoom(1 / 1.2)}
+            onClick={() => {
+              setAutoRotate(false)
+              actions.current?.zoom(1 / 1.2)
+            }}
           >
             <Icon name="minus" />
           </button>
@@ -106,6 +162,12 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
             type="button"
             className="tool-button"
             aria-pressed={autoRotate}
+            disabled={reducedMotion}
+            title={
+              reducedMotion
+                ? '已遵循系统的减少动态效果设置'
+                : '自动 360° 环绕；再次点击暂停'
+            }
             onClick={() => {
               setAutoRotate(!autoRotate)
               setView(null)
@@ -154,10 +216,21 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
       <p className="interaction-hint">
         <Icon name="mouse" />
         <span>
-          拖动旋转 · 滚轮缩放 · 右键平移
-          <span className="keyboard-hint"> · 方向键亦可旋转</span>
+          {touchInput ? (
+            '单指旋转 · 双指缩放与平移'
+          ) : (
+            <>
+              拖动旋转 · 滚轮缩放 · 右键平移
+              <span className="keyboard-hint"> · 方向键亦可旋转</span>
+            </>
+          )}
         </span>
       </p>
+      {fullscreenMessage && (
+        <p className="interaction-hint" role="status">
+          {fullscreenMessage}
+        </p>
+      )}
     </section>
   )
 }

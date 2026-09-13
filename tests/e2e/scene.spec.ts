@@ -5,8 +5,11 @@ for (const name of ['双侧展示柜方案', '薄层板展示方案', '浅框装
     const errors: string[] = []
     page.on('pageerror', (error) => errors.push(error.message))
     await page.goto('/')
-    await page.getByRole('button', { name: new RegExp(name) }).click()
-    const canvas = page.locator('canvas[data-ready="true"]')
+    await page.getByRole('link', { name: `${name}，进入 3D 查看` }).click()
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(name)
+    const canvas = page
+      .getByTestId('viewer-viewport')
+      .locator('canvas[data-ready="true"]')
     await expect(canvas).toBeVisible()
     const result = await canvas.evaluate((element: HTMLCanvasElement) => {
       const gl = element.getContext('webgl2')!
@@ -29,7 +32,7 @@ for (const name of ['双侧展示柜方案', '薄层板展示方案', '浅框装
 test('camera supports a full revolution, presets, zoom, drag and keyboard controls', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/#/proposal/twin')
   const canvas = page.locator('canvas[data-ready="true"]')
   await expect(canvas).toBeVisible()
   const start = Number(await canvas.getAttribute('data-azimuth'))
@@ -69,7 +72,7 @@ test('camera supports a full revolution, presets, zoom, drag and keyboard contro
 test('orthographic scale remains equal in portrait and landscape viewports', async ({
   page,
 }) => {
-  await page.goto('/')
+  await page.goto('/#/proposal/twin')
   const canvas = page.locator('canvas[data-ready="true"]')
   await expect(canvas).toBeVisible()
   for (const viewport of [
