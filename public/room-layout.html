@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="280 × 220 cm 房间户型，面积 6.16㎡，层高 280 cm。右侧门上方墙长 140 cm；门洞暂按 70 cm、下方墙段暂按 10 cm 绘制，待现场复核。">
+  <meta name="color-scheme" content="light">
+  <title>房间户型</title>
+  <style>
+    :root {
+      --page: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #17233b;
+      --muted: #4c5a70;
+      --line: #e2e8f1;
+      --accent: #2859d6;
+      --accent-soft: #edf3ff;
+      --window: #087c91;
+      --door: #9a631c;
+      --note: #fff7e9;
+      --grid: #dfe8fa;
+      --canvas: #f8faff;
+      --on-accent: #ffffff;
+      --on-accent-muted: #e3ecff;
+      --glass: rgb(255 255 255 / 64%);
+      --glass-border: rgb(255 255 255 / 88%);
+      --glass-blur: 18px;
+      --shadow: 0 16px 48px #344c8c0d, inset 0 1px 0 #ffffff;
+      font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--page);
+      font-size: 16px;
+      line-height: 1.6;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background:
+        radial-gradient(ellipse at 8% 28%, #c3d7fb 0, transparent 48%),
+        radial-gradient(ellipse at 94% 44%, #ddd4f8 0, transparent 44%),
+        radial-gradient(ellipse at 48% 94%, #cbece9 0, transparent 46%),
+        var(--page);
+    }
+    h1, h2, p, figure, dl, dd { margin: 0; }
+    .mono { font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: tabular-nums; }
+    main { width: min(1200px, 100%); margin-inline: auto; padding: 32px 32px 24px; }
+    .drawing-heading, .drawing-footer, .page-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    header { padding-bottom: 24px; }
+    h1 { font-size: clamp(30px, 4vw, 40px); font-weight: 650; letter-spacing: -.04em; line-height: 1.25; }
+    .room-sheet { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: stretch; }
+    .drawing, .details { border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: var(--shadow); }
+    /* Keep opaque surfaces as the fallback when backdrop blur is unavailable. */
+    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .drawing, .details {
+        background: var(--glass);
+        border-color: var(--glass-border);
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        backdrop-filter: blur(var(--glass-blur));
+      }
+    }
+    .drawing { min-width: 0; padding: 24px; display: flex; flex-direction: column; }
+    .drawing-heading { flex-wrap: wrap; }
+    h2 { font-size: 15px; font-weight: 600; }
+    .view-label { color: var(--muted); font-size: 12px; background: var(--page); border-radius: 6px; padding: 4px 8px; }
+    .drawing-stage {
+      display: grid;
+      place-items: center;
+      flex: 1;
+      margin-block: 24px;
+      padding: 16px 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background-color: rgb(248 250 255 / 56%);
+      background-image: radial-gradient(var(--line) .8px, transparent .8px);
+      background-size: 16px 16px;
+    }
+    .room-diagram { display: block; width: 100%; max-width: 560px; height: auto; overflow: visible; }
+    .room-floor { fill: var(--accent-soft); }
+    .floor-grid { stroke: var(--grid); stroke-width: .6; }
+    .wall { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: square; stroke-linejoin: miter; }
+    .window { fill: var(--paper); stroke: var(--window); stroke-width: 1.6; }
+    .door-swing { fill: var(--note); stroke: none; }
+    .door-arc { fill: none; stroke: var(--door); stroke-width: 1.1; stroke-dasharray: 3 3; }
+    .door-leaf { stroke: var(--door); stroke-width: 2.5; }
+    .dimension-line { fill: none; stroke: var(--muted); stroke-width: .7; }
+    .dimension { fill: var(--muted); font-size: 12px; }
+    .room-label { fill: var(--accent); font-size: 12px; letter-spacing: 1px; }
+    .room-area { fill: var(--accent); font-size: 30px; font-weight: 600; letter-spacing: -1px; }
+    .room-unit { font-size: 12px; letter-spacing: 0; }
+    .drawing-footer { flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 20px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px 20px; padding: 0; margin: 0; list-style: none; font-size: 12px; color: var(--muted); }
+    .legend li { display: flex; align-items: center; gap: 8px; }
+    .swatch { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--accent); }
+    .swatch-window { height: 6px; border-block: 1px solid var(--window); }
+    .swatch-door { border-top: 2px dashed var(--door); }
+    .details { padding: 24px; min-width: 0; }
+    .area-block { margin-top: 24px; padding: 20px 24px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 14px; background: linear-gradient(135deg, #2859d6, #344ec7); box-shadow: inset 0 1px 0 #ffffff40, 0 8px 24px #2859d61a; }
+    .area-block > p:first-child { color: var(--on-accent-muted); font-size: 13px; }
+    .area-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; color: var(--on-accent); margin-block: 4px; }
+    .area-value strong { font-size: 64px; font-weight: 500; line-height: 1.2; letter-spacing: -.06em; }
+    .area-value span { font-size: 18px; }
+    .area-block > p:last-child { color: var(--on-accent-muted); font-size: 12px; }
+    .dimensions { padding-block: 20px; display: grid; gap: 16px; border-bottom: 1px solid var(--line); }
+    .dimensions > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+    dt { color: var(--muted); font-size: 13px; }
+    dd { font-size: 18px; }
+    dd span { color: var(--muted); font-size: 12px; }
+    .openings { padding-block: 24px; display: grid; gap: 18px; }
+    .opening { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    .opening svg { width: 28px; height: 28px; padding: 3px; border-radius: 6px; background: var(--page); }
+    .opening-window { color: var(--window); }
+    .opening-door { color: var(--door); }
+    .opening strong { display: block; font-size: 13px; font-weight: 500; }
+    .opening p { margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .measurement-note { padding: 14px 16px; border: 1px solid #ecd9b8; border-radius: 10px; background: var(--note); font-size: 12px; color: var(--muted); }
+    .measurement-note strong { display: block; margin-bottom: 4px; color: var(--ink); font-weight: 600; }
+    .page-footer { align-items: baseline; flex-wrap: wrap; padding-top: 20px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 960px) {
+      main { padding: 24px; }
+      .room-sheet { grid-template-columns: minmax(0, 1fr) 280px; gap: 16px; }
+      .drawing, .details { padding: 20px; }
+      .drawing-stage { padding-inline: 0; }
+    }
+    @media (max-width: 760px) {
+      main { padding: 20px 16px; }
+      .room-sheet { grid-template-columns: minmax(0, 1fr); }
+      .drawing { padding: 20px 16px; }
+      .drawing-stage { margin: 20px -8px; padding-block: 12px; }
+      .drawing-footer { gap: 12px; padding-top: 16px; }
+      .legend { gap: 16px; }
+      .details { padding: 24px; }
+      .area-value strong { font-size: 60px; }
+      .openings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .opening { grid-template-columns: 1fr; gap: 8px; }
+      .page-footer { gap: 8px; }
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      .drawing, .details {
+        background: var(--paper);
+        border-color: var(--line);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+      .drawing-stage { background-color: var(--canvas); }
+    }
+    @media print {
+      :root, body { background: white; }
+      .drawing, .details {
+        background: white;
+        border-color: var(--line);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+      main { width: 100%; padding: 0; }
+      .room-sheet { break-inside: avoid; }
+      .drawing, .details { box-shadow: none; }
+      .drawing-stage { background-image: none; }
+      .room-floor, .door-swing { fill: none; }
+      .area-block { background: white; border: 1px solid var(--line); box-shadow: none; }
+      .area-block > p:first-child, .area-block > p:last-child, .area-value { color: var(--ink); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1 id="room-title">房间户型</h1>
+    </header>
+
+    <article class="room-sheet" aria-labelledby="room-title">
+      <figure class="drawing" aria-labelledby="plan-title" aria-describedby="plan-caption">
+        <div class="drawing-heading">
+          <h2 id="plan-title">平面示意</h2>
+          <span class="view-label">俯视图 · 单位 cm</span>
+        </div>
+        <div class="drawing-stage">
+          <!-- SVG coordinates use centimeters. The upper right wall is 140 cm; the 70 cm doorway and 10 cm lower wall are provisional. -->
+          <svg class="room-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="-52 -52 396 300" role="img" aria-labelledby="diagram-title diagram-description">
+            <title id="diagram-title">房间俯视图</title>
+            <desc id="diagram-description">房间宽 280 cm，深 220 cm，面积 6.16 平方米。窗户位于左墙，内开门位于右墙下侧。右侧门上方墙长 140 cm，门洞暂按 70 cm、下方墙段暂按 10 cm 绘制，合计 220 cm。门洞及下方墙段尺寸待现场复核。</desc>
+            <defs>
+              <pattern id="floor-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path class="floor-grid" d="M20 0H0V20" fill="none" />
+              </pattern>
+            </defs>
+            <rect class="room-floor" width="280" height="220" />
+            <rect width="280" height="220" fill="url(#floor-grid)" />
+            <g class="dimension-line">
+              <path d="M0 -12V-36M280 -12V-36M0 -28H104M176 -28H280M-3 -25l6 -6M277 -25l6 -6" />
+              <path d="M-12 0H-40M-12 220H-40M-32 0V74M-32 146V220M-35 3l6 -6M-35 223l6 -6" />
+              <path d="M292 0H320M292 140H320M312 0V40M312 100V140M309 3l6 -6M309 143l6 -6" />
+            </g>
+            <g class="dimension mono" text-anchor="middle">
+              <text x="140" y="-24">280 cm</text>
+              <text transform="translate(-28 110) rotate(-90)">220 cm</text>
+              <text transform="translate(316 70) rotate(-90)">140 cm</text>
+            </g>
+            <path class="wall" d="M0 50V0H280V140M280 210V220H0V170" />
+            <path class="window" d="M-3 50H3V170H-3ZM0 50V170M-3 110H3" />
+            <path class="door-swing" d="M280 140A70 70 0 0 0 210 210H280Z" />
+            <path class="door-arc" d="M280 140A70 70 0 0 0 210 210" />
+            <path class="door-leaf" d="M280 210H210" />
+            <circle cx="280" cy="210" r="2.5" fill="var(--door)" />
+            <text class="room-label" x="140" y="91" text-anchor="middle">室内空间</text>
+            <text class="room-area mono" x="140" y="121" text-anchor="middle">6.16<tspan class="room-unit" dx="4">m²</tspan></text>
+          </svg>
+        </div>
+        <figcaption class="drawing-footer" id="plan-caption">
+          <ul class="legend" aria-label="图例">
+            <li><span class="swatch" aria-hidden="true"></span>墙体</li>
+            <li><span class="swatch swatch-window" aria-hidden="true"></span>窗户</li>
+            <li><span class="swatch swatch-door" aria-hidden="true"></span>开门范围</li>
+          </ul>
+        </figcaption>
+      </figure>
+
+      <section class="details" aria-labelledby="details-title">
+        <h2 id="details-title">空间数据</h2>
+        <div class="area-block">
+          <p>房间面积</p>
+          <p class="area-value"><strong class="mono">6.16</strong><span>㎡</span></p>
+          <p class="mono">2.80 m × 2.20 m</p>
+        </div>
+        <dl class="dimensions">
+          <div><dt>房间宽度</dt><dd class="mono">280 <span>cm</span></dd></div>
+          <div><dt>房间进深</dt><dd class="mono">220 <span>cm</span></dd></div>
+          <div><dt>室内层高</dt><dd class="mono">280 <span>cm</span></dd></div>
+          <div><dt>右侧门上方墙长</dt><dd class="mono">140 <span>cm</span></dd></div>
+        </dl>
+        <div class="openings">
+          <div class="opening">
+            <svg class="opening-window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 3h16v18H4zM12 3v18M4 12h16" /></svg>
+            <div><strong>左侧窗户</strong><p>位于房间左墙</p></div>
+          </div>
+          <div class="opening">
+            <svg class="opening-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 21V3h14v18M4 3l10 3v15H4M10 12v2M2 21h20" /></svg>
+            <div><strong>右下内开门</strong><p>向室内开启，预留动线</p></div>
+          </div>
+        </div>
+        <aside class="measurement-note" aria-label="量尺提醒">
+          <strong>待现场复核</strong>
+          <p>右侧墙按 140 cm 墙段 + 70 cm 门洞 + 10 cm 下方墙段绘制。门洞 70 cm、下方墙段 10 cm 均为暂定值，待现场量尺确认。</p>
+        </aside>
+      </section>
+    </article>
+
+    <footer class="page-footer">
+      <p>仅作空间参考，非施工图纸</p>
+    </footer>
+  </main>
+</body>
+</html>
