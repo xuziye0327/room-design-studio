@@ -1,8 +1,7 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react'
 import Icon from './components/Icon.tsx'
-import ProposalDetails from './components/ProposalDetails.tsx'
 import ProposalGallery from './components/ProposalGallery.tsx'
-import SceneViewer from './components/SceneViewer.tsx'
+import ProposalView from './components/ProposalView.tsx'
 import { getProposal, PROPOSALS } from './data/proposals.ts'
 import './App.css'
 import './pages.css'
@@ -109,10 +108,7 @@ function App() {
                 ))}
               </nav>
             </header>
-            <div className="detail-layout">
-              <SceneViewer key={proposal.id} proposal={proposal} />
-              <ProposalDetails proposal={proposal} />
-            </div>
+            <ProposalView key={proposal.id} proposal={proposal} />
           </>
         ) : (
           <ProposalGallery />

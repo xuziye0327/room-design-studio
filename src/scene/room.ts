@@ -1,8 +1,10 @@
-import { Group } from 'three'
+import { Group, Mesh } from 'three'
 import type { Vector3 } from 'three'
 import { ROOM, SOUTH_ART, SOUTH_BOOKS } from '../data/proposals.ts'
 import type { Proposal, Vector3Cm } from '../data/proposals.ts'
+import { buildDimensionLines } from './annotations.ts'
 import { buildBicycle } from './bicycle.ts'
+import { buildElectrical } from './electrical.ts'
 import {
   artwork,
   buildNorthFurniture,
@@ -221,17 +223,32 @@ export function createRoomModel(proposal: Proposal) {
   buildSouthBooks(southFurniture, SOUTH_BOOKS, materials)
   artwork(southFurniture, SOUTH_ART, materials, false)
   const office = buildOffice(root, materials)
-  return { root, materials, walls, northFurniture, southFurniture, ...office }
+  const electrical = buildElectrical(root, materials)
+  const dimensions = buildDimensionLines(root)
+  return {
+    root,
+    materials,
+    walls,
+    northFurniture,
+    southFurniture,
+    electrical,
+    dimensions,
+    ...office,
+  }
 }
 
 export type RoomModel = ReturnType<typeof createRoomModel>
+export type ScenePresentation = 'furniture' | 'electrical'
 
 /** View-dependent cutaways reveal wall-mounted objects from their interior side. */
 export function updateRoomVisibility(
   model: RoomModel,
   camera: Vector3,
   cutaway: boolean,
+  presentation: ScenePresentation = 'furniture',
+  showDimensions = false,
 ) {
+  const isElectrical = presentation === 'electrical'
   const visible = {
     north: !cutaway || camera.z >= 0,
     south: !cutaway || camera.z <= ROOM.depth,
@@ -243,7 +260,23 @@ export function updateRoomVisibility(
   for (const name of ['door-leaf', 'door-handle']) {
     model.walls.east.getObjectByName(name)!.visible = !cutaway
   }
-  model.northFurniture.visible = visible.north
-  model.southFurniture.visible = visible.south
-  model.office.visible = visible.north
+  model.northFurniture.visible = visible.north && !isElectrical
+  model.southFurniture.visible = visible.south && !isElectrical
+  model.office.visible = visible.north || isElectrical
+  model.equipment.visible = !isElectrical
+  model.seating.visible = !isElectrical
+  model.electrical.visible = isElectrical
+  model.dimensions.visible = showDimensions
+  if (model.root.userData.presentation !== presentation) {
+    for (const material of Object.values(model.deskMaterials)) {
+      material.transparent = isElectrical
+      material.opacity = isElectrical ? 0.22 : 1
+      material.depthWrite = !isElectrical
+      material.needsUpdate = true
+    }
+    model.desk.traverse((object) => {
+      if (object instanceof Mesh) object.castShadow = !isElectrical
+    })
+    model.root.userData.presentation = presentation
+  }
 }

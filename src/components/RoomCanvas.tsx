@@ -12,12 +12,13 @@ import {
 import type { OrthographicCamera } from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import type { Proposal } from '../data/proposals.ts'
+import { projectAnnotations } from '../scene/annotations.ts'
 import { fitRoomCamera } from '../scene/camera.ts'
 import { disposeModel } from '../scene/geometry.ts'
 import { centimetresPerPixel, VIEW_PRESETS } from '../scene/projection.ts'
 import type { ViewPreset } from '../scene/projection.ts'
 import { createRoomModel, updateRoomVisibility } from '../scene/room.ts'
-import type { RoomModel } from '../scene/room.ts'
+import type { RoomModel, ScenePresentation } from '../scene/room.ts'
 import { applyRoomTextures } from '../scene/textures.ts'
 
 export interface CameraActions {
@@ -31,6 +32,9 @@ interface RoomCanvasProps {
   interactive?: boolean
   autoRotate?: boolean
   cutaway?: boolean
+  presentation?: ScenePresentation
+  showDimensions?: boolean
+  annotationLayer?: RefObject<HTMLDivElement | null>
   actions?: RefObject<CameraActions | null>
   scaleElement?: RefObject<HTMLSpanElement | null>
   compassElement?: RefObject<HTMLSpanElement | null>
@@ -42,6 +46,9 @@ function RoomScene({
   interactive = false,
   autoRotate = false,
   cutaway = true,
+  presentation = 'furniture',
+  showDimensions = false,
+  annotationLayer,
   actions,
   scaleElement,
   compassElement,
@@ -52,11 +59,28 @@ function RoomScene({
   const model = useRef<RoomModel | null>(null)
   const controls = useRef<OrbitControls | null>(null)
   const dimensions = useRef(size)
+  const framing = useRef(false)
+  const annotationElements = useRef(new Map<string, HTMLElement>())
   const interaction = useRef(onInteraction)
   useLayoutEffect(() => {
     dimensions.current = size
     interaction.current = onInteraction
-  }, [size, onInteraction])
+    framing.current = showDimensions || presentation === 'electrical'
+  }, [size, onInteraction, showDimensions, presentation])
+
+  useLayoutEffect(() => {
+    const elements =
+      annotationLayer?.current?.querySelectorAll<HTMLElement>(
+        '[data-annotation-id]',
+      ) ?? []
+    annotationElements.current = new Map(
+      Array.from(elements).map((element) => [
+        element.dataset.annotationId!,
+        element,
+      ]),
+    )
+    invalidate()
+  }, [annotationLayer, invalidate])
 
   useLayoutEffect(() => {
     const room = createRoomModel(proposal)
@@ -123,6 +147,7 @@ function RoomScene({
           camera,
           dimensions.current.width,
           dimensions.current.height,
+          framing.current,
         )
         orbit.enableDamping = wasDamped
         canvas.dataset.view = view
@@ -212,10 +237,20 @@ function RoomScene({
   ])
 
   useLayoutEffect(() => {
-    fitRoomCamera(camera, size.width, size.height)
+    fitRoomCamera(camera, size.width, size.height, framing.current)
+    gl.domElement.dataset.presentation = presentation
+    gl.domElement.dataset.dimensions = String(showDimensions)
     controls.current?.dispatchEvent({ type: 'change' })
     invalidate()
-  }, [camera, size.width, size.height, invalidate])
+  }, [
+    camera,
+    gl,
+    size.width,
+    size.height,
+    showDimensions,
+    presentation,
+    invalidate,
+  ])
 
   useEffect(() => {
     if (controls.current)
@@ -233,8 +268,25 @@ function RoomScene({
       orbit.update(Math.min(delta, 0.1))
       if (orbit.autoRotate) invalidate()
     }
-    if (model.current)
-      updateRoomVisibility(model.current, camera.position, cutaway)
+    if (model.current) {
+      updateRoomVisibility(
+        model.current,
+        camera.position,
+        cutaway,
+        presentation,
+        showDimensions,
+      )
+      if (annotationElements.current.size)
+        projectAnnotations(
+          annotationElements.current,
+          camera,
+          size,
+          model.current.dimensions,
+          showDimensions,
+          presentation === 'electrical',
+          model.current.office.visible,
+        )
+    }
     if (gl.info.render.triangles > 0) {
       gl.domElement.dataset.ready = 'true'
       gl.domElement.dataset.triangles = String(gl.info.render.triangles)

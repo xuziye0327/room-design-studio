@@ -1,16 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Proposal } from '../data/proposals.ts'
 import { useMediaQuery } from '../hooks/useMediaQuery.ts'
+import { SCENE_ANNOTATIONS } from '../scene/annotations.ts'
 import { VIEW_PRESETS } from '../scene/projection.ts'
 import type { ViewPreset } from '../scene/projection.ts'
+import type { ScenePresentation } from '../scene/room.ts'
 import Icon from './Icon.tsx'
 import RoomCanvas from './RoomCanvas.tsx'
 import type { CameraActions } from './RoomCanvas.tsx'
 
-export default function SceneViewer({ proposal }: { proposal: Proposal }) {
+export default function SceneViewer({
+  proposal,
+  presentation,
+  onPresentationChange,
+}: {
+  proposal: Proposal
+  presentation: ScenePresentation
+  onPresentationChange: (value: ScenePresentation) => void
+}) {
   const actions = useRef<CameraActions | null>(null)
   const scaleElement = useRef<HTMLSpanElement | null>(null)
   const compassElement = useRef<HTMLSpanElement | null>(null)
+  const annotationLayer = useRef<HTMLDivElement | null>(null)
+  const [showDimensions, setShowDimensions] = useState(false)
   const [view, setView] = useState<ViewPreset | null>('overview')
   const [autoRotate, setAutoRotate] = useState(false)
   const [cutaway, setCutaway] = useState(true)
@@ -59,6 +71,12 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
     setAutoRotate(false)
     setView(null)
   }
+  const selectPresentation = (value: ScenePresentation) => {
+    onPresentationChange(value)
+    setShowDimensions(false)
+    setCutaway(true)
+    selectView(value === 'electrical' ? 'north' : 'overview')
+  }
 
   return (
     <section
@@ -72,6 +90,23 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
           <Icon name="cube" />
           3D 空间预览
         </h2>
+        <div className="presentation-tabs" role="group" aria-label="展示内容">
+          <button
+            type="button"
+            aria-pressed={presentation === 'furniture'}
+            onClick={() => selectPresentation('furniture')}
+          >
+            家具布局
+          </button>
+          <button
+            type="button"
+            aria-pressed={presentation === 'electrical'}
+            onClick={() => selectPresentation('electrical')}
+          >
+            <Icon name="power" />
+            电位定位
+          </button>
+        </div>
         <div className="drawing-actions">
           <span className="view-label">正交投影 · 单位 cm</span>
           <button
@@ -91,11 +126,36 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
           interactive
           autoRotate={autoRotate && !reducedMotion}
           cutaway={cutaway}
+          presentation={presentation}
+          showDimensions={showDimensions}
+          annotationLayer={annotationLayer}
           actions={actions}
           scaleElement={scaleElement}
           compassElement={compassElement}
           onInteraction={stopMotion}
         />
+        <div
+          ref={annotationLayer}
+          className="world-labels"
+          role="list"
+          aria-label="场景尺寸与定位标注"
+          aria-hidden={!showDimensions && presentation !== 'electrical'}
+        >
+          {SCENE_ANNOTATIONS.map((annotation) => (
+            <div
+              key={annotation.id}
+              role="listitem"
+              data-annotation-id={annotation.id}
+              className={`world-label world-label--${annotation.kind}`}
+              style={{ display: 'none' }}
+            >
+              <span className="annotation-title mono">{annotation.title}</span>
+              {annotation.detail && (
+                <span className="annotation-detail">{annotation.detail}</span>
+              )}
+            </div>
+          ))}
+        </div>
         <div className="view-presets" role="group" aria-label="相机视角">
           {(Object.keys(VIEW_PRESETS) as ViewPreset[]).map((key) => (
             <button
@@ -118,7 +178,11 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
           <span className="mono">50 cm</span>
         </div>
         <span className="scene-status">
-          {cutaway ? '剖切展示' : '完整墙体'}
+          {presentation === 'electrical'
+            ? '电位定位 · cm'
+            : cutaway
+              ? '剖切展示'
+              : '完整墙体'}
         </span>
         <div className="zoom-controls" role="group" aria-label="缩放与复位">
           <button
@@ -179,7 +243,17 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
           <button
             type="button"
             className="tool-button"
+            aria-pressed={showDimensions}
+            onClick={() => setShowDimensions(!showDimensions)}
+          >
+            <Icon name="ruler" />
+            尺寸标注
+          </button>
+          <button
+            type="button"
+            className="tool-button"
             aria-pressed={cutaway}
+            title="随视角隐藏近侧墙体及相应家具，显露对面布局"
             onClick={() => setCutaway(!cutaway)}
           >
             <Icon name="layers" />
@@ -213,6 +287,19 @@ export default function SceneViewer({ proposal }: { proposal: Proposal }) {
           </button>
         </div>
       </div>
+      {presentation === 'electrical' && (
+        <div className="electrical-legend">
+          <span>
+            <i className="legend-power" />
+            五孔 / 开关 / 灯位
+          </span>
+          <span>
+            <i className="legend-network" />
+            网络
+          </span>
+          <span>连线为连接示意</span>
+        </div>
+      )}
       <p className="interaction-hint">
         <Icon name="mouse" />
         <span>

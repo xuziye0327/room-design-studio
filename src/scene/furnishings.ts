@@ -302,13 +302,14 @@ export function buildOffice(parent: Object3D, m: RoomMaterials) {
   const office = group(parent, 'office')
   const desk = group(office, DESK.id)
   desk.userData.dimensionsCm = { ...DESK }
-  outline(fromSpec(desk, DESK_TOP, m.oak, 0.8))
+  const deskMaterials = { top: m.oak.clone(), frame: m.trim.clone() }
+  outline(fromSpec(desk, DESK_TOP, deskMaterials.top, 0.8))
   for (const x of [26, 254]) {
     for (const z of [7, 73])
-      box(desk, 'desk-leg', [4, 71, 4], [x, 35.5, z], m.trim, 0.5)
+      box(desk, 'desk-leg', [4, 71, 4], [x, 35.5, z], deskMaterials.frame, 0.5)
   }
-  box(desk, 'desk-crossbar', [224, 5, 4], [140, 66, 9], m.trim)
-  box(desk, 'desk-apron', [224, 4, 3], [140, 68, 74], m.trim)
+  box(desk, 'desk-crossbar', [224, 5, 4], [140, 66, 9], deskMaterials.frame)
+  box(desk, 'desk-apron', [224, 4, 3], [140, 68, 74], deskMaterials.frame)
 
   const equipment = group(office, 'equipment')
   for (const spec of MONITORS) {
@@ -393,7 +394,7 @@ export function buildOffice(parent: Object3D, m: RoomMaterials) {
   for (const spec of CHAIRS) chair(seating, spec.x, spec.south, spec.id, m)
   headphones(equipment, [114, 62, 76], m)
   const network = buildNetworkTray(office, m)
-  return { office, desk, equipment, seating, network }
+  return { office, desk, deskMaterials, equipment, seating, network }
 }
 
 export function buildNetworkTray(parent: Group, m: RoomMaterials) {

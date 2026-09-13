@@ -30,9 +30,11 @@ export function applyRoomTextures(model: RoomModel) {
       c.stroke()
     }
   })
-  model.materials.oak.map = oak
-  model.materials.oak.color.set('#ffffff')
-  model.materials.oak.needsUpdate = true
+  for (const material of [model.materials.oak, model.deskMaterials.top]) {
+    material.map = oak
+    material.color.set('#ffffff')
+    material.needsUpdate = true
+  }
 
   const screen = texture(640, 400, (c) => {
     const background = c.createLinearGradient(0, 0, 640, 400)

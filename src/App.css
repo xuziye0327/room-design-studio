@@ -304,6 +304,12 @@ h1 {
   .zoom-controls {
     right: 10px;
     bottom: 12px;
+    flex-direction: row;
+  }
+  .scene-status {
+    left: 22px;
+    bottom: 55px;
+    transform: none;
   }
   .icon-button {
     width: 44px;
