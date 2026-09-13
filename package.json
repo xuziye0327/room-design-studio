@@ -7,7 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "prepare": "husky",
     "preview": "vite preview"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,json,jsonc,css,scss,html,md,mdx,yml,yaml}": "oxfmt --write --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@react-three/fiber": "^9.7.0",
@@ -26,6 +32,9 @@
     "@types/three": "^0.185.4",
     "@vitejs/plugin-react": "^6.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "oxfmt": "^0.67.0",
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
