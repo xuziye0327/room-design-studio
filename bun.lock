@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "vite-project",
+      "name": "room-design-studio",
       "dependencies": {
         "@react-three/fiber": "^9.7.0",
         "react": "^19.2.8",
