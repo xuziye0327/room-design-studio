@@ -74,6 +74,7 @@ function books(
   count: number,
   m: RoomMaterials,
   height = 28,
+  { depth = 17, facingSouth = true } = {},
 ) {
   const palette = [m.green, m.cream, m.blue, m.paper, m.terracotta]
   for (let index = 0; index < count; index++) {
@@ -81,12 +82,18 @@ function books(
     const book = box(
       parent,
       'book',
-      [3.7, h, 17],
+      [3.7, h, depth],
       [x + index * 4.4, bottom + h / 2, south],
       palette[index % palette.length],
       0.25,
     )
-    box(book, 'book-spine', [2.1, 0.45, 0.12], [0, h * 0.25, 8.55], m.paper)
+    box(
+      book,
+      'book-spine',
+      [2.1, 0.45, 0.12],
+      [0, h * 0.25, (depth / 2 + 0.05) * (facingSouth ? 1 : -1)],
+      m.paper,
+    )
   }
 }
 
@@ -428,10 +435,11 @@ export function buildSouthBooks(
     object,
     spec.x + 8,
     spec.bottom + spec.height,
-    spec.south + 8.5,
+    spec.south + spec.depth / 2,
     9,
     m,
     28,
+    { depth: spec.depth - 2, facingSouth: false },
   )
   return object
 }

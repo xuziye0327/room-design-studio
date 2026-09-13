@@ -47,7 +47,7 @@ test('thumbnail navigation, proposal switching, history and focus restoration wo
   await expect(page.locator('canvas[data-ready="true"]')).toHaveCount(1)
   await page
     .getByRole('navigation', { name: '切换设计方案' })
-    .getByRole('link', { name: '03 浅框装饰' })
+    .getByRole('link', { name: /浅框装饰$/ })
     .click()
   await expect(page).toHaveTitle('浅框装饰方案 · 空间方案')
   await page.goBack()

@@ -1,5 +1,5 @@
 /* oxlint-disable react/immutability -- Three.js owns mutable scene objects and imperative camera handles. */
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { addAfterEffect, Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import type { RefObject } from 'react'
 import {
@@ -95,6 +95,17 @@ function RoomScene({
       disposeModel(room.root)
     }
   }, [proposal, scene, gl, invalidate])
+
+  useLayoutEffect(
+    () =>
+      addAfterEffect(() => {
+        if (model.current && gl.info.render.triangles > 0) {
+          gl.domElement.dataset.ready = 'true'
+          gl.domElement.dataset.triangles = String(gl.info.render.triangles)
+        }
+      }),
+    [gl],
+  )
 
   useLayoutEffect(() => {
     const canvas = gl.domElement
@@ -287,10 +298,6 @@ function RoomScene({
           model.current.office.visible,
         )
     }
-    if (gl.info.render.triangles > 0) {
-      gl.domElement.dataset.ready = 'true'
-      gl.domElement.dataset.triangles = String(gl.info.render.triangles)
-    } else invalidate()
   })
 
   return (
