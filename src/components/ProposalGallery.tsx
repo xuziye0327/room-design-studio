@@ -9,7 +9,7 @@ export default function ProposalGallery() {
         <div className="gallery-intro">
           <p className="eyebrow">
             <span />
-            双人办公 × 公路车收纳
+            双人办公空间
           </p>
           <h1>一间房，三种可能。</h1>
           <p className="gallery-lead">
@@ -122,7 +122,7 @@ export default function ProposalGallery() {
           </span>
           <div>
             <h3>共用南墙设计</h3>
-            <p>公路车低位横挂 · 浅书托</p>
+            <p>浅书托 · 装饰画</p>
           </div>
         </div>
       </section>

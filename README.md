@@ -1,6 +1,6 @@
 # 空间方案 · 3D 设计预览
 
-双人办公与公路车收纳空间的交互式方案展示，使用当前 Vite、React 19、TypeScript、Three.js 与 React Three Fiber 项目实现。
+双人办公空间的交互式方案展示，使用当前 Vite、React 19、TypeScript、Three.js 与 React Three Fiber 项目实现。
 
 首页以同机位、同尺度的三张真实 3D 缩略图展示 **双侧展示柜、薄层板展示、浅框装饰** 三套方案。点击卡片进入 360° 查看页，查看北墙、共用南墙、尺寸及电位布局。页面视觉沿用 `public/room-layout.html` 的浅色渐变、玻璃面板与蓝色重点。
 
@@ -79,13 +79,13 @@ npm run preview  # 预览生产构建，默认 http://localhost:4173
 
 ```bash
 npm run test:unit    # 尺寸、真实几何包围盒、坐标、投影与图层状态
-npm run test:e2e     # 桌面及移动端 Chrome 浏览器验证
+npm run test:e2e     # 桌面及移动端 Chromium 浏览器验证
 npm run lint
 npm run format:check
 npm run build
 ```
 
-浏览器测试使用本机 Google Chrome（Playwright `channel: chrome`），包含移动端触屏模拟。测试会启动本地 Vite 服务，也可复用已经运行的开发服务。
+浏览器测试使用 Playwright 管理的 Chromium（`browserName: 'chromium'`），包含移动端触屏模拟。首次运行或升级 Playwright 后，执行 `npx playwright install chromium` 安装匹配的浏览器版本。测试会启动本地 Vite 服务，也可复用已经运行的开发服务。
 
 验证范围包括：
 

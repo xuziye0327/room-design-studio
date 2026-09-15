@@ -10,7 +10,15 @@ test('home shows three live thumbnails at the same camera scale', async ({
   page,
 }) => {
   await page.goto('/')
-  await expect(page).toHaveTitle('空间方案 · 双人办公与公路车收纳')
+  await expect(page).toHaveTitle('空间方案 · 双人办公空间')
+  await expect(page.locator('.brand-subtitle')).toHaveText('双人办公空间')
+  await expect(page.locator('.gallery-intro .eyebrow')).toHaveText(
+    '双人办公空间',
+  )
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    '6.16㎡ 双人办公空间：双侧展示柜、薄层板展示、浅框装饰三套设计方案，厘米级等比例建模，支持 360° 交互查看。',
+  )
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     '一间房，三种可能。',
   )
@@ -59,6 +67,7 @@ test('thumbnail navigation, proposal switching, history and focus restoration wo
     '浅框装饰方案',
   )
   await page.getByRole('link', { name: '返回方案总览' }).click()
+  await expect(page).toHaveTitle('空间方案 · 双人办公空间')
   await expect(
     page.getByRole('link', { name: '浅框装饰方案，进入 3D 查看' }),
   ).toBeFocused()

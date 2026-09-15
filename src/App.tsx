@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     document.title = proposal
       ? `${proposal.name} · 空间方案`
-      : '空间方案 · 双人办公与公路车收纳'
+      : '空间方案 · 双人办公空间'
     const returningTo = !proposal ? lastProposal.current : undefined
     const frame = requestAnimationFrame(() => {
       if (returningTo) {
@@ -58,7 +58,7 @@ function App() {
             <Icon name="cube" />
           </span>
           <span>
-            空间方案<span className="brand-subtitle">双人办公与公路车收纳</span>
+            空间方案<span className="brand-subtitle">双人办公空间</span>
           </span>
         </a>
         <nav className="site-nav" aria-label="主导航">
