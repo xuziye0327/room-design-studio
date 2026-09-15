@@ -131,13 +131,10 @@ function RoomScene({
         (camera.right - camera.left) /
         (width * camera.zoom)
       ).toFixed(8)
-      canvas.dataset.cmPerPixelY = centimetresPerPixel(
-        camera,
-        height,
-        camera.zoom,
-      ).toFixed(8)
+      const cmPerPixel = centimetresPerPixel(camera, height, camera.zoom)
+      canvas.dataset.cmPerPixelY = cmPerPixel.toFixed(8)
       if (scaleElement?.current)
-        scaleElement.current.style.width = `${50 / centimetresPerPixel(camera, height, camera.zoom)}px`
+        scaleElement.current.style.width = `${50 / cmPerPixel}px`
       if (compassElement?.current)
         compassElement.current.style.transform = `rotate(${-orbit.getAzimuthalAngle()}rad)`
       invalidate()
@@ -195,22 +192,21 @@ function RoomScene({
     const focus = () => {
       if (interactive) canvas.focus({ preventScroll: true })
     }
+    const commands: Record<string, () => void> = {
+      ArrowLeft: () => api.orbit(-Math.PI / 12),
+      ArrowRight: () => api.orbit(Math.PI / 12),
+      ArrowUp: () => api.orbit(0, -Math.PI / 18),
+      ArrowDown: () => api.orbit(0, Math.PI / 18),
+      '+': () => api.zoom(1.2),
+      '=': () => api.zoom(1.2),
+      '-': () => api.zoom(1 / 1.2),
+      Home: () => api.preset('overview'),
+    }
     const keyboard = (event: KeyboardEvent) => {
-      const commands: Record<string, () => void> = {
-        ArrowLeft: () => api.orbit(-Math.PI / 12),
-        ArrowRight: () => api.orbit(Math.PI / 12),
-        ArrowUp: () => api.orbit(0, -Math.PI / 18),
-        ArrowDown: () => api.orbit(0, Math.PI / 18),
-        '+': () => api.zoom(1.2),
-        '=': () => api.zoom(1.2),
-        '-': () => api.zoom(1 / 1.2),
-        Home: () => api.preset('overview'),
-      }
-      if (commands[event.key]) {
-        event.preventDefault()
-        started()
-        commands[event.key]()
-      }
+      if (!Object.hasOwn(commands, event.key)) return
+      event.preventDefault()
+      started()
+      commands[event.key]()
     }
     orbit.addEventListener('change', snapshot)
     orbit.addEventListener('start', started)

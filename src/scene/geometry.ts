@@ -1,7 +1,6 @@
 import {
   BoxGeometry,
   BufferGeometry,
-  Color,
   CylinderGeometry,
   EdgesGeometry,
   Group,
@@ -175,18 +174,14 @@ export function lines(
   return mesh
 }
 
-export function instanceBoxes(
+export function instances(
   parent: Object3D,
   name: string,
-  size: Vector3Cm,
+  geometry: BufferGeometry,
   positions: Vector3Cm[],
   material: Material,
 ) {
-  const mesh = new InstancedMesh(
-    new BoxGeometry(...size),
-    material,
-    positions.length,
-  )
+  const mesh = new InstancedMesh(geometry, material, positions.length)
   mesh.name = name
   const matrix = new Matrix4()
   positions.forEach((position, index) =>
@@ -210,29 +205,17 @@ export function disposeModel(root: Object3D) {
       const items = Array.isArray(renderable.material)
         ? renderable.material
         : [renderable.material]
-      for (const material of items) {
-        materials.add(material)
-        for (const value of Object.values(material)) {
-          if (
-            value &&
-            typeof value === 'object' &&
-            'isTexture' in value &&
-            value.isTexture
-          )
-            textures.add(value as Texture)
-        }
-      }
+      for (const material of items) materials.add(material)
     }
     if (object instanceof InstancedMesh) object.dispose()
   })
   geometries.forEach((geometry) => geometry.dispose())
-  materials.forEach((material) => material.dispose())
+  for (const material of materials) {
+    for (const value of Object.values(material)) {
+      if (value?.isTexture) textures.add(value as Texture)
+    }
+    material.dispose()
+  }
   textures.forEach((texture) => texture.dispose())
   root.clear()
-}
-
-export function tint(material: MeshStandardMaterial, color: string) {
-  const result = material.clone()
-  result.color = new Color(color)
-  return result
 }

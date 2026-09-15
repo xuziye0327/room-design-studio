@@ -185,30 +185,26 @@ export default function SceneViewer({
               : '完整墙体'}
         </span>
         <div className="zoom-controls" role="group" aria-label="缩放与复位">
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="放大"
-            title="放大"
-            onClick={() => {
-              setAutoRotate(false)
-              actions.current?.zoom(1.2)
-            }}
-          >
-            <Icon name="plus" />
-          </button>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="缩小"
-            title="缩小"
-            onClick={() => {
-              setAutoRotate(false)
-              actions.current?.zoom(1 / 1.2)
-            }}
-          >
-            <Icon name="minus" />
-          </button>
+          {(
+            [
+              { icon: 'plus', label: '放大', factor: 1.2 },
+              { icon: 'minus', label: '缩小', factor: 1 / 1.2 },
+            ] as const
+          ).map(({ icon, label, factor }) => (
+            <button
+              key={icon}
+              type="button"
+              className="icon-button"
+              aria-label={label}
+              title={label}
+              onClick={() => {
+                setAutoRotate(false)
+                actions.current?.zoom(factor)
+              }}
+            >
+              <Icon name={icon} />
+            </button>
+          ))}
           <button
             type="button"
             className="icon-button"
@@ -261,30 +257,26 @@ export default function SceneViewer({
           </button>
         </div>
         <div className="orbit-controls" role="group" aria-label="旋转视角">
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="向左旋转 15 度"
-            title="向左旋转 15°"
-            onClick={() => {
-              stopMotion()
-              actions.current?.orbit(-Math.PI / 12)
-            }}
-          >
-            <Icon name="arrow-left" />
-          </button>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="向右旋转 15 度"
-            title="向右旋转 15°"
-            onClick={() => {
-              stopMotion()
-              actions.current?.orbit(Math.PI / 12)
-            }}
-          >
-            <Icon name="arrow-right" />
-          </button>
+          {(
+            [
+              { icon: 'arrow-left', label: '向左旋转', angle: -Math.PI / 12 },
+              { icon: 'arrow-right', label: '向右旋转', angle: Math.PI / 12 },
+            ] as const
+          ).map(({ icon, label, angle }) => (
+            <button
+              key={icon}
+              type="button"
+              className="icon-button"
+              aria-label={`${label} 15 度`}
+              title={`${label} 15°`}
+              onClick={() => {
+                stopMotion()
+                actions.current?.orbit(angle)
+              }}
+            >
+              <Icon name={icon} />
+            </button>
+          ))}
         </div>
       </div>
       {presentation === 'electrical' && (

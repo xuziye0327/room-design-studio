@@ -1,10 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const proposals = [
-  ['twin', '双侧展示柜方案'],
-  ['shelf', '薄层板展示方案'],
-  ['frame', '浅框装饰方案'],
-] as const
+const proposals = ['双侧展示柜方案', '薄层板展示方案', '浅框装饰方案']
 
 test('header links to the GitHub repository on gallery and proposal pages', async ({
   page,
@@ -56,7 +52,7 @@ test('home shows three live thumbnails at the same camera scale', async ({
     expect(scale.scale).toBeCloseTo(scales[0].scale, 4)
     expect(scale.angle).toBe(scales[0].angle)
   }
-  for (const [, name] of proposals)
+  for (const name of proposals)
     await expect(
       page.getByRole('link', { name: `${name}，进入 3D 查看` }),
     ).toBeVisible()

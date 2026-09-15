@@ -1,25 +1,4 @@
-type IconName =
-  | 'cube'
-  | 'arrow-right'
-  | 'arrow-left'
-  | 'rotate'
-  | 'pause'
-  | 'reset'
-  | 'plus'
-  | 'minus'
-  | 'layers'
-  | 'ruler'
-  | 'floorplan'
-  | 'expand'
-  | 'close'
-  | 'chevron'
-  | 'info'
-  | 'power'
-  | 'mouse'
-  | 'check'
-  | 'github'
-
-const paths: Record<IconName, string> = {
+const paths = {
   cube: 'm12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12 4 7.5M12 12v9M8 5.25l8 4.5',
   'arrow-right': 'M4 12h15m-6-6 6 6-6 6',
   'arrow-left': 'M20 12H5m6-6-6 6 6 6',
@@ -38,7 +17,6 @@ const paths: Record<IconName, string> = {
   info: 'M12 11v6m0-10v.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
   power: 'm13 2-8 12h6l-1 8 9-13h-6l1-7Z',
   mouse: 'M12 3a6 6 0 0 1 6 6v6a6 6 0 0 1-12 0V9a6 6 0 0 1 6-6Zm0 0v6M6 10h12',
-  check: 'm5 12 4 4L19 6',
   github:
     'M9 19c-4.3 1.3-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22',
 }
@@ -47,7 +25,7 @@ export default function Icon({
   name,
   className = '',
 }: {
-  name: IconName
+  name: keyof typeof paths
   className?: string
 }) {
   return (

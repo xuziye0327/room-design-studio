@@ -1,4 +1,4 @@
-import { PROPOSALS, ROOM } from '../data/proposals.ts'
+import { DESK, PROPOSALS, ROOM, SCREEN } from '../data/proposals.ts'
 import Icon from './Icon.tsx'
 import RoomCanvas from './RoomCanvas.tsx'
 
@@ -25,9 +25,11 @@ export default function ProposalGallery() {
             <span>㎡</span>
           </p>
           <p>
-            <span className="mono">280 × 220 cm</span>
+            <span className="mono">
+              {ROOM.width} × {ROOM.depth} cm
+            </span>
             <span className="area-divider" />
-            层高 <span className="mono">280 cm</span>
+            层高 <span className="mono">{ROOM.height} cm</span>
           </p>
           <svg
             className="area-outline"
@@ -43,7 +45,10 @@ export default function ProposalGallery() {
       <section aria-labelledby="proposals-heading">
         <div className="section-heading">
           <h2 id="proposals-heading">
-            选择你的空间方案<span className="count-badge mono">03</span>
+            选择你的空间方案
+            <span className="count-badge mono">
+              {String(PROPOSALS.length).padStart(2, '0')}
+            </span>
           </h2>
           <p>
             <Icon name="mouse" />
@@ -104,7 +109,9 @@ export default function ProposalGallery() {
           </span>
           <div>
             <h3>白橡木双人长桌</h3>
-            <p className="mono">240 × 80 × 75 cm</p>
+            <p className="mono">
+              {DESK.width} × {DESK.depth} × {DESK.height} cm
+            </p>
           </div>
         </div>
         <div className="shared-condition">
@@ -113,7 +120,7 @@ export default function ProposalGallery() {
           </span>
           <div>
             <h3>双人四屏工位</h3>
-            <p>每人一横一竖 · 32 英寸</p>
+            <p>每人一横一竖 · {SCREEN.diagonalInches} 英寸</p>
           </div>
         </div>
         <div className="shared-condition">

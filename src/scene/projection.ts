@@ -1,11 +1,6 @@
 import type { Vector3Cm } from '../data/proposals.ts'
 
-export type ViewPreset = 'overview' | 'north' | 'south' | 'top'
-
-export const VIEW_PRESETS: Record<
-  ViewPreset,
-  { label: string; position: Vector3Cm; target: Vector3Cm }
-> = {
+export const VIEW_PRESETS = {
   overview: {
     label: '整体',
     position: [530, 440, 610],
@@ -14,7 +9,12 @@ export const VIEW_PRESETS: Record<
   north: { label: '北墙', position: [140, 150, 850], target: [140, 140, 0] },
   south: { label: '南墙', position: [140, 240, -650], target: [140, 130, 200] },
   top: { label: '俯视', position: [140, 950, 110.01], target: [140, 0, 110] },
-}
+} satisfies Record<
+  string,
+  { label: string; position: Vector3Cm; target: Vector3Cm }
+>
+
+export type ViewPreset = keyof typeof VIEW_PRESETS
 
 /** Equal centimetres per pixel on both axes, regardless of the viewport shape. */
 export function orthographicFrustum(

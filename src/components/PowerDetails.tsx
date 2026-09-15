@@ -1,4 +1,4 @@
-import { ELECTRICAL_POINTS } from '../data/proposals.ts'
+import { ELECTRICAL_POINTS, NETWORK_TRAY } from '../data/proposals.ts'
 import Icon from './Icon.tsx'
 
 export default function PowerDetails() {
@@ -53,7 +53,9 @@ export default function PowerDetails() {
           </div>
           <div>
             <dt>交换机托盘</dt>
-            <dd className="mono">30 × 20 cm</dd>
+            <dd className="mono">
+              {NETWORK_TRAY.width} × {NETWORK_TRAY.depth} cm
+            </dd>
           </div>
         </dl>
       </section>
@@ -69,7 +71,8 @@ export default function PowerDetails() {
           </div>
         </div>
         <p className="detail-footnote">
-          B4 为交换机常供电；托盘底部 H58 cm，保留通风及检修空间。
+          B4 为交换机常供电；托盘底部 H{NETWORK_TRAY.bottom}{' '}
+          cm，保留通风及检修空间。
         </p>
       </section>
       <div className="measurement-note">

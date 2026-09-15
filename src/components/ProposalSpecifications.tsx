@@ -1,9 +1,14 @@
 import {
   BICYCLE,
+  COMPUTERS,
+  DESK,
   ELECTRICAL_POINTS,
   MEASUREMENT_NOTES,
+  NETWORK_TRAY,
   northFixtures,
   SCREEN,
+  SOUTH_ART,
+  SOUTH_BOOKS,
 } from '../data/proposals.ts'
 import type { Proposal } from '../data/proposals.ts'
 import Icon from './Icon.tsx'
@@ -75,8 +80,9 @@ export default function ProposalSpecifications({
               <div>
                 <dt>公路车低位横挂</dt>
                 <dd>
-                  参考长 {BICYCLE.width} × 高 {BICYCLE.height} cm；横向 x10–185
-                  cm，轮胎离地约 {BICYCLE.bottom} cm。
+                  参考长 {BICYCLE.width} × 高 {BICYCLE.height} cm；横向 x
+                  {BICYCLE.x}–{BICYCLE.x + BICYCLE.width} cm，轮胎离地约{' '}
+                  {BICYCLE.bottom} cm。
                 </dd>
               </div>
               <div>
@@ -88,11 +94,18 @@ export default function ProposalSpecifications({
               </div>
               <div>
                 <dt>浅书托</dt>
-                <dd>宽 90 × 深 15 cm，底部 H145 cm；横向 x20–110 cm。</dd>
+                <dd>
+                  宽 {SOUTH_BOOKS.width} × 深 {SOUTH_BOOKS.depth} cm，底部 H
+                  {SOUTH_BOOKS.bottom} cm；横向 x{SOUTH_BOOKS.x}–
+                  {SOUTH_BOOKS.x + SOUTH_BOOKS.width} cm。
+                </dd>
               </div>
               <div>
                 <dt>装饰画</dt>
-                <dd>宽 65 × 高 85 cm，底部 H143 cm，位于南墙右上方。</dd>
+                <dd>
+                  宽 {SOUTH_ART.width} × 高 {SOUTH_ART.height} cm，底部 H
+                  {SOUTH_ART.bottom} cm，位于南墙右上方。
+                </dd>
               </div>
             </dl>
           </section>
@@ -102,11 +115,12 @@ export default function ProposalSpecifications({
               <div>
                 <dt>双人长桌</dt>
                 <dd>
-                  240 × 80 × 75 cm，北墙居中，左右各留 20 cm；白橡木色哑光桌面。
+                  {DESK.width} × {DESK.depth} × {DESK.height}{' '}
+                  cm，北墙居中，左右各留 {DESK.x} cm；白橡木色哑光桌面。
                 </dd>
               </div>
               <div>
-                <dt>四台 32 英寸显示器</dt>
+                <dt>四台 {SCREEN.diagonalInches} 英寸显示器</dt>
                 <dd>
                   每人一横一竖、竖屏位于中部。按 16:9 有效画面{' '}
                   {SCREEN.width.toFixed(2)} × {SCREEN.height.toFixed(2)} cm
@@ -116,7 +130,8 @@ export default function ProposalSpecifications({
               <div>
                 <dt>两台落地主机</dt>
                 <dd>
-                  参考 21 × 42 × 46
+                  参考 {COMPUTERS[0].width} × {COMPUTERS[0].depth} ×{' '}
+                  {COMPUTERS[0].height}{' '}
                   cm，各在对应工位右手侧。支架、机箱与办公椅细节为示意。
                 </dd>
               </div>
@@ -167,7 +182,9 @@ export default function ProposalSpecifications({
         <p className="table-note">
           K1 分别控制主灯和柜灯。L1
           低压灯线按柜型分支，驱动留可检修位置；墙面底盒独立固定，洞洞板配合预留开口。SW1
-          托盘为 x185–215、y18–38 cm，底部 H58 cm。
+          托盘为 x{NETWORK_TRAY.x}–{NETWORK_TRAY.x + NETWORK_TRAY.width}、y
+          {NETWORK_TRAY.south}–{NETWORK_TRAY.south + NETWORK_TRAY.depth}{' '}
+          cm，底部 H{NETWORK_TRAY.bottom} cm。
         </p>
         <section
           className="implementation-notes"

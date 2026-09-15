@@ -24,9 +24,7 @@ test('dimension lines measure the real room and desk geometry', () => {
   const expectedLengths = [ROOM.width, ROOM.depth, ROOM.height, DESK.width]
   DIMENSION_ANNOTATIONS.forEach((annotation, index) => {
     near(
-      new Vector3(...annotation.from!).distanceTo(
-        new Vector3(...annotation.to!),
-      ),
+      new Vector3(...annotation.from).distanceTo(new Vector3(...annotation.to)),
       expectedLengths[index],
     )
   })

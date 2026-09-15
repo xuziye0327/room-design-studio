@@ -117,11 +117,10 @@ export function buildElectrical(parent: Group, m: RoomMaterials) {
     )
   }
   for (const annotation of ELECTRICAL_ANNOTATIONS) {
-    if (annotation.leaderFrom)
-      path(
-        [annotation.leaderFrom, annotation.position],
-        annotation.kind === 'network' ? '#087c91' : '#ad792d',
-      )
+    path(
+      [annotation.leaderFrom, annotation.position],
+      annotation.kind === 'network' ? '#087c91' : '#ad792d',
+    )
   }
   electrical.visible = false
   return electrical

@@ -4,18 +4,17 @@ import { DESK, ROOM } from '../data/proposals.ts'
 import type { Vector3Cm } from '../data/proposals.ts'
 import { group, lines } from './geometry.ts'
 
-export interface SceneAnnotation {
+type SceneAnnotation = {
   id: string
   title: string
   detail?: string
   position: Vector3Cm
-  kind: 'dimension' | 'power' | 'network'
-  from?: Vector3Cm
-  to?: Vector3Cm
-  leaderFrom?: Vector3Cm
-}
+} & (
+  | { kind: 'dimension'; from: Vector3Cm; to: Vector3Cm }
+  | { kind: 'power' | 'network'; leaderFrom: Vector3Cm }
+)
 
-export const DIMENSION_ANNOTATIONS: SceneAnnotation[] = [
+export const DIMENSION_ANNOTATIONS = [
   {
     id: 'room-width',
     title: `宽 ${ROOM.width} cm`,
@@ -49,9 +48,9 @@ export const DIMENSION_ANNOTATIONS: SceneAnnotation[] = [
     from: [DESK.x, DESK.height, DESK.depth + 6],
     to: [DESK.x + DESK.width, DESK.height, DESK.depth + 6],
   },
-]
+] satisfies SceneAnnotation[]
 
-export const ELECTRICAL_ANNOTATIONS: SceneAnnotation[] = [
+export const ELECTRICAL_ANNOTATIONS = [
   {
     id: 'U',
     title: 'U1–U3',
@@ -148,9 +147,9 @@ export const ELECTRICAL_ANNOTATIONS: SceneAnnotation[] = [
     leaderFrom: [246, 25, 20],
     kind: 'network',
   },
-]
+] satisfies SceneAnnotation[]
 
-export const SCENE_ANNOTATIONS = [
+export const SCENE_ANNOTATIONS: SceneAnnotation[] = [
   ...DIMENSION_ANNOTATIONS,
   ...ELECTRICAL_ANNOTATIONS,
 ]
@@ -159,8 +158,8 @@ export function buildDimensionLines(parent: Group) {
   const dimensions = group(parent, 'dimensions')
   for (const annotation of DIMENSION_ANNOTATIONS) {
     const item = group(dimensions, `dimension-${annotation.id}`)
-    const a = annotation.from!
-    const b = annotation.to!
+    const a = annotation.from
+    const b = annotation.to
     const points: Vector3Cm[] = [a, b]
     for (const p of [a, b]) {
       if (annotation.id === 'room-height')
@@ -197,7 +196,7 @@ export function projectAnnotations(
     if (!element) continue
     let visible = annotation.kind === 'dimension' ? showDimensions : electrical
     if (annotation.id === 'desk-size' && !officeVisible) visible = false
-    if (annotation.from && annotation.to) {
+    if (annotation.kind === 'dimension') {
       start.set(...annotation.from).project(camera)
       end.set(...annotation.to).project(camera)
       const length = Math.hypot(

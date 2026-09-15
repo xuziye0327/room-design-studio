@@ -1,3 +1,4 @@
+import { DESK, ROOM } from '../data/proposals.ts'
 import type { Proposal } from '../data/proposals.ts'
 import Icon from './Icon.tsx'
 
@@ -23,7 +24,8 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
         </div>
         <div>
           <strong className="mono">
-            30<span>cm</span>
+            {Math.max(...proposal.cabinets.map((cabinet) => cabinet.depth))}
+            <span>cm</span>
           </strong>
           <span>柜体最大进深</span>
         </div>
@@ -34,25 +36,28 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
           <div>
             <dt>房间净尺寸</dt>
             <dd className="mono">
-              280 × 220<span> cm</span>
+              {ROOM.width} × {ROOM.depth}
+              <span> cm</span>
             </dd>
           </div>
           <div>
             <dt>室内层高</dt>
             <dd className="mono">
-              280<span> cm</span>
+              {ROOM.height}
+              <span> cm</span>
             </dd>
           </div>
           <div>
             <dt>双人长桌</dt>
             <dd className="mono">
-              240 × 80 × 75<span> cm</span>
+              {DESK.width} × {DESK.depth} × {DESK.height}
+              <span> cm</span>
             </dd>
           </div>
           <div>
             <dt>桌子两侧留空</dt>
             <dd>
-              各 <span className="mono">20 cm</span>
+              各 <span className="mono">{DESK.x} cm</span>
             </dd>
           </div>
         </dl>

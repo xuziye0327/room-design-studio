@@ -1,10 +1,4 @@
-import {
-  CircleGeometry,
-  InstancedMesh,
-  Matrix4,
-  Mesh,
-  TorusGeometry,
-} from 'three'
+import { BoxGeometry, CircleGeometry, Mesh, TorusGeometry } from 'three'
 import type { Group, Object3D } from 'three'
 import {
   CHAIRS,
@@ -26,7 +20,7 @@ import {
   ellipsoid,
   fromSpec,
   group,
-  instanceBoxes,
+  instances,
   lines,
   outline,
   tube,
@@ -97,11 +91,7 @@ function books(
   }
 }
 
-export function headphones(
-  parent: Object3D,
-  position: Vector3Cm,
-  m: RoomMaterials,
-) {
+function headphones(parent: Object3D, position: Vector3Cm, m: RoomMaterials) {
   const object = group(parent, 'headphones')
   object.position.set(...position)
   const band = new Mesh(new TorusGeometry(6.8, 0.9, 8, 24, Math.PI), m.metal)
@@ -121,17 +111,14 @@ function pegboard(parent: Object3D, spec: BoxCm, m: RoomMaterials) {
       positions.push([spec.x + x, spec.bottom + height, spec.depth + 0.015])
     }
   }
-  const holes = new InstancedMesh(
+  const holes = instances(
+    board,
+    'pegboard-holes',
     new CircleGeometry(0.24, 8),
+    positions,
     m.holes,
-    positions.length,
   )
-  const matrix = new Matrix4()
-  positions.forEach((position, index) =>
-    holes.setMatrixAt(index, matrix.makeTranslation(...position)),
-  )
-  holes.instanceMatrix.needsUpdate = true
-  board.add(holes)
+  holes.castShadow = false
   return board
 }
 
@@ -357,10 +344,10 @@ export function buildOffice(parent: Object3D, m: RoomMaterials) {
     for (let col = 0; col < 15; col++)
       for (let row = 0; row < 5; row++)
         keys.push([x - 21 + col * 2.1, 76.7, 50 + row * 2])
-    instanceBoxes(
+    instances(
       equipment,
       'keyboard-keys',
-      [1.7, 0.3, 1.5],
+      new BoxGeometry(1.7, 0.3, 1.5),
       keys,
       m.cabinetBack,
     )
@@ -404,7 +391,7 @@ export function buildOffice(parent: Object3D, m: RoomMaterials) {
   return { office, desk, deskMaterials, equipment, seating, network }
 }
 
-export function buildNetworkTray(parent: Group, m: RoomMaterials) {
+function buildNetworkTray(parent: Group, m: RoomMaterials) {
   const network = group(parent, 'network')
   fromSpec(network, NETWORK_TRAY, m.metal)
   box(network, 'network-switch', [23, 3, 12], [200, 61.5, 28], m.dark, 0.4)
@@ -413,7 +400,13 @@ export function buildNetworkTray(parent: Group, m: RoomMaterials) {
     61.6,
     34.05,
   ])
-  instanceBoxes(network, 'network-ports', [2.8, 1.4, 0.2], ports, m.gold)
+  instances(
+    network,
+    'network-ports',
+    new BoxGeometry(2.8, 1.4, 0.2),
+    ports,
+    m.gold,
+  )
   return network
 }
 

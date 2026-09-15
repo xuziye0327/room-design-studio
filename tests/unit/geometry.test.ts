@@ -1,6 +1,16 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { Box3, OrthographicCamera, Vector3 } from 'three'
+import {
+  Box3,
+  BoxGeometry,
+  Group,
+  Matrix4,
+  Mesh,
+  MeshStandardMaterial,
+  OrthographicCamera,
+  Texture,
+  Vector3,
+} from 'three'
 import {
   DESK,
   DESK_TOP,
@@ -10,7 +20,7 @@ import {
   northFixtures,
 } from '../../src/data/proposals.ts'
 import { fitRoomCamera } from '../../src/scene/camera.ts'
-import { disposeModel } from '../../src/scene/geometry.ts'
+import { disposeModel, instances } from '../../src/scene/geometry.ts'
 import { VIEW_PRESETS } from '../../src/scene/projection.ts'
 import { createRoomModel, updateRoomVisibility } from '../../src/scene/room.ts'
 
@@ -97,17 +107,56 @@ test('cutaway follows all four sides and restores a complete enclosure', () => {
   disposeModel(model.root)
 })
 
+test('instanced geometry keeps placement and disposes shared resources once', (t) => {
+  const root = new Group()
+  const geometry = new BoxGeometry(2, 4, 6)
+  const texture = new Texture()
+  const material = new MeshStandardMaterial({
+    map: texture,
+    emissiveMap: texture,
+  })
+  const mesh = instances(
+    root,
+    'repeated-boxes',
+    geometry,
+    [
+      [1, 2, 3],
+      [4, 5, 6],
+    ],
+    material,
+  )
+  root.add(new Mesh(geometry, [material, material]))
+  const matrix = new Matrix4()
+  for (let i = 0; i < mesh.count; i++) {
+    mesh.getMatrixAt(i, matrix)
+    assert.deepEqual(
+      new Vector3().setFromMatrixPosition(matrix).toArray(),
+      i === 0 ? [1, 2, 3] : [4, 5, 6],
+    )
+  }
+  assert.equal(mesh.castShadow, true)
+  const disposals = [geometry, material, texture, mesh].map((resource) =>
+    t.mock.method(resource, 'dispose'),
+  )
+  disposeModel(root)
+  for (const dispose of disposals) assert.equal(dispose.mock.callCount(), 1)
+  assert.equal(root.children.length, 0)
+})
+
 test('all camera presets fit the room without stretching after resize', () => {
   for (const preset of Object.values(VIEW_PRESETS)) {
-    for (const [width, height] of [
-      [1000, 600],
-      [375, 480],
-      [812, 300],
-    ]) {
+    for (const [width, height, withAnnotations] of [
+      [1000, 600, false],
+      [375, 480, false],
+      [812, 300, false],
+      [1000, 600, true],
+      [375, 480, true],
+      [812, 300, true],
+    ] as const) {
       const camera = new OrthographicCamera(-1, 1, 1, -1, 0.1, 2500)
       camera.position.set(...preset.position)
       camera.lookAt(new Vector3(...preset.target))
-      fitRoomCamera(camera, width, height)
+      fitRoomCamera(camera, width, height, withAnnotations)
       near(
         (camera.right - camera.left) / width,
         (camera.top - camera.bottom) / height,

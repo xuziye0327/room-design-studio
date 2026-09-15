@@ -80,12 +80,12 @@ export function applyRoomTextures(model: RoomModel) {
       c.fill()
     }
   })
+  const artMaterial = model.materials.paper.clone()
+  artMaterial.color.set('#ffffff')
+  artMaterial.map = art
   model.root.traverse((object) => {
     if (object instanceof Mesh && object.userData.artTexture) {
-      const material = model.materials.paper.clone()
-      material.color.set('#ffffff')
-      material.map = art
-      object.material = material
+      object.material = artMaterial
     }
   })
 }
