@@ -12,8 +12,9 @@ export const theme = createTheme({
     action: { selected: '#edf3ff', hover: '#edf3ff65' },
   },
   typography: {
-    fontFamily: "'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif",
-    body1: { lineHeight: 1.6 },
+    fontFamily: "'Maple Mono NF CN', 'Microsoft YaHei', monospace",
+    fontSize: 16,
+    body1: { fontSize: 18, lineHeight: 1.6 },
     h1: { fontWeight: 650, letterSpacing: '-0.04em', lineHeight: 1.25 },
     button: { textTransform: 'none' },
   },
@@ -44,7 +45,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 40,
-          fontSize: 12,
+          fontSize: 14,
           '@media (max-width: 760px)': { minHeight: 44 },
         },
       },
@@ -68,7 +69,7 @@ export const theme = createTheme({
           gap: 7,
           minHeight: 40,
           padding: '8px 11px',
-          fontSize: 12,
+          fontSize: 14,
           '@media (max-width: 760px)': { minHeight: 44, padding: '8px 9px' },
         },
       },
@@ -82,14 +83,14 @@ export const theme = createTheme({
     },
     MuiChip: {
       defaultProps: { size: 'small' },
-      styleOverrides: { root: { borderRadius: 5, fontSize: 10, height: 24 } },
+      styleOverrides: { root: { borderRadius: 5, fontSize: 12, height: 24 } },
     },
     MuiAlert: {
       styleOverrides: {
         root: {
           borderRadius: 10,
           boxShadow: 'none',
-          fontSize: 12,
+          fontSize: 14,
           variants: [
             {
               props: { severity: 'warning', variant: 'standard' },
@@ -115,8 +116,8 @@ export const theme = createTheme({
     },
     MuiTableCell: {
       styleOverrides: {
-        root: { fontSize: 12, padding: '11px 16px' },
-        head: { fontSize: 11, color: 'var(--mui-palette-text-secondary)' },
+        root: { fontSize: 14, padding: '11px 16px' },
+        head: { fontSize: 13, color: 'var(--mui-palette-text-secondary)' },
       },
     },
   },

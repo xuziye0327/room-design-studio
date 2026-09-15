@@ -36,7 +36,7 @@ export default function ProposalGallery() {
           <Typography component="p">共同空间基准</Typography>
           <Typography component="p" className="area-value">
             <strong className="mono">{ROOM.area}</strong>
-            <span>㎡</span>
+            <span>m²</span>
           </Typography>
           <Typography component="p">
             <span className="mono">

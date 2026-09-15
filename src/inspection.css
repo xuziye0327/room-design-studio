@@ -24,7 +24,7 @@
   color: var(--accent);
   box-shadow: 0 2px 6px #344c8c07;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.4;
   will-change: transform;
 }
@@ -35,7 +35,7 @@
 .annotation-detail {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 400;
   line-height: 1.5;
   margin-top: 1px;
@@ -65,7 +65,7 @@
   gap: 8px 18px;
   padding-top: 16px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .electrical-legend > span {
   display: inline-flex;
@@ -98,7 +98,7 @@
   align-items: center;
   gap: 16px;
   margin-top: 18px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--window);
 }
 .network-flow > span {
@@ -151,7 +151,7 @@
 .detail-footnote {
   margin-top: 15px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
 }
 .specifications {
@@ -180,12 +180,12 @@
 }
 .specification-title strong {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 550;
 }
 .specification-title small {
   display: block;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
   margin-top: 3px;
 }
@@ -194,7 +194,7 @@
 }
 .specification-intro {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.85;
   margin-bottom: 22px;
 }
@@ -214,7 +214,7 @@
   border-bottom: 1px solid var(--line);
   background: #edf3fc80;
   text-align: left;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
 }
 .table-scroll thead th {
@@ -229,7 +229,7 @@
 }
 .table-note {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.8;
   margin-top: 10px;
 }
@@ -241,7 +241,7 @@
 }
 .specification-columns h3,
 .implementation-notes h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -250,11 +250,11 @@
   gap: 15px;
 }
 .specification-list dt {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
 }
 .specification-list dd {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.8;
   margin-top: 3px;
@@ -264,7 +264,7 @@
   margin-top: 24px;
 }
 .implementation-notes h3 {
-  font-size: 13px;
+  font-size: 15px;
   margin-bottom: 12px;
 }
 .implementation-notes ul {
@@ -273,7 +273,7 @@
   margin: 0;
   padding-left: 18px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
 }
 @media (max-width: 760px) {
@@ -306,7 +306,7 @@
   .presentation-tabs button {
     flex: 1;
     min-height: 44px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .world-label {
     padding: 3px 5px;
@@ -315,14 +315,14 @@
     display: none;
   }
   .annotation-title {
-    font-size: 10px;
+    font-size: 12px;
   }
   .specification-title small {
-    font-size: 10px;
+    font-size: 12px;
   }
   .electrical-legend {
     gap: 6px 12px;
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (max-height: 500px) and (min-width: 561px) {

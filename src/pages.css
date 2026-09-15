@@ -15,7 +15,7 @@
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 650;
   letter-spacing: 0.025em;
 }
@@ -41,7 +41,7 @@
   padding-left: 18px;
   border-left: 1px solid #a0b1ca50;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0;
 }
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   gap: 30px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .site-nav a {
   display: flex;
@@ -118,13 +118,13 @@
   background: var(--accent);
 }
 .gallery-heading h1 {
-  font-size: clamp(32px, 3.5vw, 42px);
+  font-size: clamp(34px, calc(3.5vw + 2px), 44px);
   line-height: 1.35;
   letter-spacing: -0.045em;
 }
 .gallery-lead {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.9;
   margin-top: 16px;
 }
@@ -146,7 +146,7 @@
 }
 .area-block > p:first-child {
   color: #e3ecff;
-  font-size: 11px;
+  font-size: 13px;
 }
 .area-value {
   display: flex;
@@ -155,19 +155,19 @@
   margin-block: 1px 4px;
 }
 .area-value strong {
-  font-size: 54px;
+  font-size: 56px;
   line-height: 1.2;
   font-weight: 500;
   letter-spacing: -0.065em;
 }
 .area-value > span {
-  font-size: 16px;
+  font-size: 18px;
 }
 .area-block > p:last-of-type {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
+  font-size: 12px;
   color: #e3ecff;
   white-space: nowrap;
 }
@@ -198,11 +198,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
 }
 .count-badge {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   padding: 1px 6px;
   border: 1px solid #ccd9f0;
@@ -214,7 +214,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
 }
 .section-heading > p .icon {
@@ -267,7 +267,7 @@
   border-radius: 8px;
   background: #ffffffaa;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 }
 .thumbnail-badge {
@@ -277,7 +277,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .thumbnail-badge .icon {
@@ -289,14 +289,14 @@
   bottom: 13px;
   left: 18px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.03em;
 }
 .proposal-card-body {
   padding: 21px 22px 18px;
 }
 .proposal-card h3 {
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.5;
   font-weight: 650;
   letter-spacing: -0.025em;
@@ -305,7 +305,7 @@
   min-height: 44px;
   margin-top: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
 }
 .proposal-tags {
@@ -333,7 +333,7 @@
 }
 .proposal-card-footer > span {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .proposal-card-footer strong {
   display: inline-flex;
@@ -341,7 +341,7 @@
   gap: 7px;
   white-space: nowrap;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
 }
 .proposal-card-footer .icon {
@@ -363,12 +363,12 @@
 }
 .shared-heading .eyebrow {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 4px;
   letter-spacing: 0.04em;
 }
 .shared-heading h2 {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 550;
 }
 .shared-condition {
@@ -392,13 +392,13 @@
   height: 17px;
 }
 .shared-condition h3 {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 550;
 }
 .shared-condition p {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .site-footer {
   display: flex;
@@ -408,7 +408,7 @@
   gap: 12px;
   padding: 23px 0 25px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .site-footer > p:last-child {
   display: inline-flex;
@@ -434,7 +434,7 @@
   align-items: center;
   gap: 14px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 19px;
 }
 .breadcrumb a {
@@ -461,12 +461,12 @@
   margin-bottom: 25px;
 }
 .detail-page-heading .eyebrow {
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 9px;
   letter-spacing: 0.02em;
 }
 .detail-page-heading h1 {
-  font-size: 32px;
+  font-size: 34px;
 }
 .proposal-switcher {
   display: flex;
@@ -482,11 +482,11 @@
   gap: 7px;
   padding: 10px 12px;
   border-radius: 7px;
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .proposal-switcher .mono {
-  font-size: 10px;
+  font-size: 12px;
 }
 .detail-layout {
   display: grid;
@@ -511,20 +511,20 @@
   border-radius: 6px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 11px;
+  font-size: 13px;
 }
 .details-heading h2 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 .detail-theme {
   margin-top: 23px;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
 }
 .detail-description {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.85;
   color: var(--muted);
 }
@@ -544,20 +544,20 @@
   padding-left: 20px;
 }
 .feature-metrics strong {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.04em;
 }
 .feature-metrics strong > span {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
   margin-left: 6px;
   letter-spacing: 0;
 }
 .feature-metrics > div > span {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .detail-section {
@@ -565,7 +565,7 @@
   padding-block: 19px;
 }
 .detail-section h3 {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
 }
 .detail-dimensions {
@@ -580,15 +580,15 @@
   gap: 8px;
 }
 .detail-dimensions dt {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .detail-dimensions dd {
-  font-size: 12px;
+  font-size: 14px;
   text-align: right;
 }
 .detail-dimensions dd > span {
-  font-size: 10px;
+  font-size: 12px;
 }
 .material-palette {
   display: flex;
@@ -600,7 +600,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .material-palette i {
@@ -625,12 +625,12 @@
   background: #8d9e91;
 }
 .measurement-note strong {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 .measurement-note p {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   margin-top: 4px;
 }
@@ -642,7 +642,7 @@
   margin-top: 16px;
   min-height: 40px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
 }
 .document-link > span {
   display: flex;
@@ -658,7 +658,7 @@
   text-underline-offset: 4px;
 }
 .file-type {
-  font-size: 8px;
+  font-size: 10px;
   color: var(--muted);
   border: 1px solid #ccd7e6;
   padding: 1px 4px;
@@ -682,7 +682,7 @@
     padding: 19px 17px 17px;
   }
   .proposal-card h3 {
-    font-size: 17px;
+    font-size: 19px;
   }
   .proposal-card-footer > span {
     display: none;
@@ -692,7 +692,7 @@
   }
   .proposal-card-footer::before {
     content: '360° 空间查看';
-    font-size: 10px;
+    font-size: 12px;
     color: var(--muted);
   }
   .shared-conditions {
@@ -778,7 +778,7 @@
     gap: 16px;
   }
   .site-brand {
-    font-size: 14px;
+    font-size: 16px;
     gap: 9px;
   }
   .brand-mark {
@@ -792,7 +792,7 @@
   }
   .site-nav {
     gap: 18px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .site-nav .external-arrow {
     display: none;
@@ -806,23 +806,23 @@
     margin-bottom: 28px;
   }
   .gallery-heading h1 {
-    font-size: 30px;
+    font-size: 32px;
   }
   .gallery-lead {
-    font-size: 12px;
+    font-size: 14px;
   }
   .gallery-intro .eyebrow {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 12px;
   }
   .area-block {
     padding: 16px;
   }
   .area-value strong {
-    font-size: 46px;
+    font-size: 48px;
   }
   .area-block > p:last-of-type {
-    font-size: 9px;
+    font-size: 11px;
   }
   .shared-conditions {
     grid-template-columns: 1fr;
@@ -835,10 +835,10 @@
     gap: 14px;
   }
   .shared-condition h3 {
-    font-size: 12px;
+    font-size: 14px;
   }
   .shared-condition p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .site-footer {
     gap: 8px;
@@ -851,7 +851,7 @@
     margin-bottom: 18px;
   }
   .detail-page-heading h1 {
-    font-size: 28px;
+    font-size: 30px;
   }
   .detail-page-heading {
     margin-bottom: 22px;
@@ -893,7 +893,7 @@
   .area-block > p:first-child {
     grid-column: 1;
     grid-row: 1;
-    font-size: 10px;
+    font-size: 12px;
   }
   .area-value {
     grid-column: 2;
@@ -902,10 +902,10 @@
     gap: 6px;
   }
   .area-value strong {
-    font-size: 39px;
+    font-size: 41px;
   }
   .area-value > span {
-    font-size: 13px;
+    font-size: 15px;
   }
   .area-block > p:last-of-type {
     grid-column: 1;
@@ -925,7 +925,7 @@
     height: 120px;
   }
   .section-heading h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
   .section-heading > p {
     display: none;
@@ -941,7 +941,7 @@
     padding: 21px 22px 18px;
   }
   .proposal-card h3 {
-    font-size: 19px;
+    font-size: 21px;
   }
   .proposal-card-footer > span {
     display: inline;

@@ -312,7 +312,7 @@ const staggeredCabinets: CabinetSpec[] = [
   },
   {
     id: 'cabinet-right',
-    label: '右侧书籍／手办柜',
+    label: '右侧书籍/手办柜',
     x: 185,
     south: 0,
     bottom: 183,

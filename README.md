@@ -6,17 +6,18 @@
 
 ## 运行
 
-使用项目已有依赖和 Node.js 22.22.1 或更新版本：
+使用 Bun 管理依赖和执行项目脚本，CLI 工具通过 `bunx` 调用；需安装 Node.js 22.22.1 或更新版本。
 
 ```bash
-npm run dev
+bun install
+bun run dev
 ```
 
 打开终端显示的 Vite 地址，默认是 `http://localhost:5173`。浏览器使用 WebGL 2 渲染。
 
 ```bash
-npm run build    # TypeScript 检查与生产构建，输出 dist/
-npm run preview  # 预览生产构建，默认 http://localhost:4173
+bun run build    # TypeScript 检查与生产构建，输出 dist/
+bun run preview  # 预览生产构建，默认 http://localhost:4173
 ```
 
 `dist/` 可部署到静态站点服务。应用采用 Hash 导航，以下链接可以直接打开和刷新：
@@ -55,13 +56,13 @@ npm run preview  # 预览生产构建，默认 http://localhost:4173
 | H        | Y             | 向上，距完成地面 |
 | y        | Z             | 向南             |
 
-- 房间净尺寸为 **280 × 220 cm**，层高 **280 cm**，面积 **6.16㎡**。
+- 房间净尺寸为 **280 × 220 cm**，层高 **280 cm**，面积 **6.16 m²**。
 - 双人长桌为 **240 × 80 × 75 cm**，北墙居中，两侧各留 **20 cm**。
 - 四台 32 英寸显示器按 16:9 有效显示区域建模，竖屏位于中部；两台主机位于各自工位右手侧。
 - 公路车参考长 **175 cm**、高 **100 cm**，轮胎离地 **15 cm**，最大墙面突出量暂按 **45 cm**。
 - 办公区含 **14 个五孔插位**，右侧网络面板 W1 位于 **x170 / H55 cm**。含灯位、开关及通用插座在内的 **19 个电位**均有定位表。
 
-所有模型保持统一世界尺度。正交相机根据画布实际尺寸更新视锥，横、纵方向的厘米／像素比例一致；旋转、缩放、全屏与设备像素密度变化只改变观察方式。50 cm 标尺对应相机视平面；实体尺寸通过三维标线与尺寸表读取。
+所有模型保持统一世界尺度。正交相机根据画布实际尺寸更新视锥，横、纵方向的厘米/像素比例一致；旋转、缩放、全屏与设备像素密度变化只改变观察方式。50 cm 标尺对应相机视平面；实体尺寸通过三维标线与尺寸表读取。
 
 ### 设计文件
 
@@ -78,14 +79,14 @@ npm run preview  # 预览生产构建，默认 http://localhost:4173
 ## 验证
 
 ```bash
-npm run test:unit    # 尺寸、真实几何包围盒、坐标、投影与图层状态
-npm run test:e2e     # 桌面及移动端 Chromium 浏览器验证
-npm run lint
-npm run format:check
-npm run build
+bun run test:unit    # 尺寸、真实几何包围盒、坐标、投影与图层状态
+bun run test:e2e     # 桌面及移动端 Chromium 浏览器验证
+bun run lint
+bun run format:check
+bun run build
 ```
 
-浏览器测试使用 Playwright 管理的 Chromium（`browserName: 'chromium'`），包含移动端触屏模拟。首次运行或升级 Playwright 后，执行 `npx playwright install chromium` 安装匹配的浏览器版本。测试会启动本地 Vite 服务，也可复用已经运行的开发服务。
+浏览器测试使用 Playwright 管理的 Chromium（`browserName: 'chromium'`），包含移动端触屏模拟。首次运行或升级 Playwright 后，执行 `bunx playwright install chromium` 安装匹配的浏览器版本。测试会启动本地 Vite 服务，也可复用已经运行的开发服务。
 
 验证范围包括：
 
@@ -96,10 +97,10 @@ npm run build
 - 尺寸与电位图层、19 个电位坐标、右侧单口网络及材料恢复。
 - 多次进入与返回时的 GPU 资源释放、画布状态和运行错误。
 
-验证生产构建时，先启动 `npm run preview`，再执行：
+验证生产构建时，先启动 `bun run preview`，再执行：
 
 ```bash
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:4173 npm run test:e2e
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:4173 bun run test:e2e
 ```
 
 测试报告保存在 `.temp/playwright-report/`，失败诊断保存在 `.temp/test-results/`。规划、截图和构建缓存也集中在 `.temp/`。
@@ -135,3 +136,15 @@ public/delivery/              原设计文件与效果图
 场景的几何、木纹、屏幕画面与装饰画由项目代码生成。缩略图按需绘制，交互场景在变化时重绘；场景退出时释放几何、材质、纹理与控制器。
 
 代码由 Oxfmt 格式化，Oxlint 检查；Husky 的提交钩子通过 lint-staged 格式化本次暂存文件。
+
+## 字体
+
+应用与户型页使用 Maple Mono NF CN Regular。本地 WOFF2 子集按源码字符生成，并保留完整可打印 ASCII，支持动态数字与尺寸。原始 TTF 位于 `assets/fonts/`，网页字体及 SIL OFL 许可位于 `public/fonts/`。
+
+新增文案后，用原始 TTF 重新生成子集（需安装 [uv](https://docs.astral.sh/uv/)；常规构建直接使用已提交的 WOFF2）：
+
+```bash
+uv run scripts/subset-font.py assets/fonts/MapleMono-NF-CN-Regular.ttf
+```
+
+脚本会检查生成子集的字符覆盖，并报告原字体缺少的字符；字体通过 `font-display: swap` 加载，子集未覆盖的运行时字符使用系统字体。

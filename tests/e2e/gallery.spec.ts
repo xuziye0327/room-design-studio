@@ -32,7 +32,7 @@ test('home shows three live thumbnails at the same camera scale', async ({
   )
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
-    '6.16㎡ 双人办公空间：双侧展示柜、薄层板展示、浅框装饰三套设计方案，厘米级等比例建模，支持 360° 交互查看。',
+    '6.16 m² 双人办公空间：双侧展示柜、薄层板展示、浅框装饰三套设计方案，厘米级等比例建模，支持 360° 交互查看。',
   )
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     '一间房，三种可能。',

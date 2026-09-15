@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="280 × 220 cm 房间户型，面积 6.16㎡，层高 280 cm。右侧门上方墙长 140 cm；门洞暂按 70 cm、下方墙段暂按 10 cm 绘制，待现场复核。">
+  <meta name="description" content="280 × 220 cm 房间户型，面积 6.16 m²，层高 280 cm。右侧门上方墙长 140 cm；门洞暂按 70 cm、下方墙段暂按 10 cm 绘制，待现场复核。">
   <meta name="color-scheme" content="light">
   <title>房间户型</title>
+  <link rel="stylesheet" href="/fonts/maple-mono.css">
   <style>
     :root {
       --page: #f5f7fb;
@@ -26,12 +27,12 @@
       --glass-border: rgb(255 255 255 / 88%);
       --glass-blur: 18px;
       --shadow: 0 16px 48px #344c8c0d, inset 0 1px 0 #ffffff;
-      font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      font-family: 'Maple Mono NF CN', 'Microsoft YaHei', monospace;
       color: var(--ink);
       background: var(--page);
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.6;
-      font-synthesis: none;
+      font-synthesis: weight;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -46,7 +47,7 @@
         var(--page);
     }
     h1, h2, p, figure, dl, dd { margin: 0; }
-    .mono { font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: tabular-nums; }
+    .mono { font-family: inherit; font-variant-numeric: tabular-nums; }
     main { width: min(1200px, 100%); margin-inline: auto; padding: 32px 32px 24px; }
     .drawing-heading, .drawing-footer, .page-footer {
       display: flex;
@@ -55,7 +56,7 @@
       gap: 16px;
     }
     header { padding-bottom: 24px; }
-    h1 { font-size: clamp(30px, 4vw, 40px); font-weight: 650; letter-spacing: -.04em; line-height: 1.25; }
+    h1 { font-size: clamp(32px, calc(4vw + 2px), 42px); font-weight: 650; letter-spacing: -.04em; line-height: 1.25; }
     .room-sheet { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: stretch; }
     .drawing, .details { border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: var(--shadow); }
     /* Keep opaque surfaces as the fallback when backdrop blur is unavailable. */
@@ -69,8 +70,8 @@
     }
     .drawing { min-width: 0; padding: 24px; display: flex; flex-direction: column; }
     .drawing-heading { flex-wrap: wrap; }
-    h2 { font-size: 15px; font-weight: 600; }
-    .view-label { color: var(--muted); font-size: 12px; background: var(--page); border-radius: 6px; padding: 4px 8px; }
+    h2 { font-size: 17px; font-weight: 600; }
+    .view-label { color: var(--muted); font-size: 14px; background: var(--page); border-radius: 6px; padding: 4px 8px; }
     .drawing-stage {
       display: grid;
       place-items: center;
@@ -92,38 +93,38 @@
     .door-arc { fill: none; stroke: var(--door); stroke-width: 1.1; stroke-dasharray: 3 3; }
     .door-leaf { stroke: var(--door); stroke-width: 2.5; }
     .dimension-line { fill: none; stroke: var(--muted); stroke-width: .7; }
-    .dimension { fill: var(--muted); font-size: 12px; }
-    .room-label { fill: var(--accent); font-size: 12px; letter-spacing: 1px; }
-    .room-area { fill: var(--accent); font-size: 30px; font-weight: 600; letter-spacing: -1px; }
-    .room-unit { font-size: 12px; letter-spacing: 0; }
+    .dimension { fill: var(--muted); font-size: 14px; }
+    .room-label { fill: var(--accent); font-size: 14px; letter-spacing: 1px; }
+    .room-area { fill: var(--accent); font-size: 32px; font-weight: 600; letter-spacing: -1px; }
+    .room-unit { font-size: 14px; letter-spacing: 0; }
     .drawing-footer { flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 20px; }
-    .legend { display: flex; flex-wrap: wrap; gap: 12px 20px; padding: 0; margin: 0; list-style: none; font-size: 12px; color: var(--muted); }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px 20px; padding: 0; margin: 0; list-style: none; font-size: 14px; color: var(--muted); }
     .legend li { display: flex; align-items: center; gap: 8px; }
     .swatch { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--accent); }
     .swatch-window { height: 6px; border-block: 1px solid var(--window); }
     .swatch-door { border-top: 2px dashed var(--door); }
     .details { padding: 24px; min-width: 0; }
     .area-block { margin-top: 24px; padding: 20px 24px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 14px; background: linear-gradient(135deg, #2859d6, #344ec7); box-shadow: inset 0 1px 0 #ffffff40, 0 8px 24px #2859d61a; }
-    .area-block > p:first-child { color: var(--on-accent-muted); font-size: 13px; }
+    .area-block > p:first-child { color: var(--on-accent-muted); font-size: 15px; }
     .area-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; color: var(--on-accent); margin-block: 4px; }
-    .area-value strong { font-size: 64px; font-weight: 500; line-height: 1.2; letter-spacing: -.06em; }
-    .area-value span { font-size: 18px; }
-    .area-block > p:last-child { color: var(--on-accent-muted); font-size: 12px; }
+    .area-value strong { font-size: 66px; font-weight: 500; line-height: 1.2; letter-spacing: -.06em; }
+    .area-value span { font-size: 20px; }
+    .area-block > p:last-child { color: var(--on-accent-muted); font-size: 14px; }
     .dimensions { padding-block: 20px; display: grid; gap: 16px; border-bottom: 1px solid var(--line); }
     .dimensions > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-    dt { color: var(--muted); font-size: 13px; }
-    dd { font-size: 18px; }
-    dd span { color: var(--muted); font-size: 12px; }
+    dt { color: var(--muted); font-size: 15px; }
+    dd { font-size: 20px; }
+    dd span { color: var(--muted); font-size: 14px; }
     .openings { padding-block: 24px; display: grid; gap: 18px; }
     .opening { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
     .opening svg { width: 28px; height: 28px; padding: 3px; border-radius: 6px; background: var(--page); }
     .opening-window { color: var(--window); }
     .opening-door { color: var(--door); }
-    .opening strong { display: block; font-size: 13px; font-weight: 500; }
-    .opening p { margin-top: 2px; color: var(--muted); font-size: 12px; }
-    .measurement-note { padding: 14px 16px; border: 1px solid #ecd9b8; border-radius: 10px; background: var(--note); font-size: 12px; color: var(--muted); }
+    .opening strong { display: block; font-size: 15px; font-weight: 500; }
+    .opening p { margin-top: 2px; color: var(--muted); font-size: 14px; }
+    .measurement-note { padding: 14px 16px; border: 1px solid #ecd9b8; border-radius: 10px; background: var(--note); font-size: 14px; color: var(--muted); }
     .measurement-note strong { display: block; margin-bottom: 4px; color: var(--ink); font-weight: 600; }
-    .page-footer { align-items: baseline; flex-wrap: wrap; padding-top: 20px; color: var(--muted); font-size: 12px; }
+    .page-footer { align-items: baseline; flex-wrap: wrap; padding-top: 20px; color: var(--muted); font-size: 14px; }
     @media (max-width: 960px) {
       main { padding: 24px; }
       .room-sheet { grid-template-columns: minmax(0, 1fr) 280px; gap: 16px; }
@@ -138,7 +139,7 @@
       .drawing-footer { gap: 12px; padding-top: 16px; }
       .legend { gap: 16px; }
       .details { padding: 24px; }
-      .area-value strong { font-size: 60px; }
+      .area-value strong { font-size: 62px; }
       .openings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
       .opening { grid-template-columns: 1fr; gap: 8px; }
       .page-footer { gap: 8px; }
@@ -227,7 +228,7 @@
         <h2 id="details-title">空间数据</h2>
         <div class="area-block">
           <p>房间面积</p>
-          <p class="area-value"><strong class="mono">6.16</strong><span>㎡</span></p>
+          <p class="area-value"><strong class="mono">6.16</strong><span>m²</span></p>
           <p class="mono">2.80 m × 2.20 m</p>
         </div>
         <dl class="dimensions">
