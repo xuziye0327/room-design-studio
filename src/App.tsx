@@ -70,6 +70,16 @@ function App() {
             房间户型
             <Icon name="arrow-right" className="external-arrow" />
           </a>
+          <a
+            href="https://github.com/xuziye0327/room-design-studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub 项目仓库（在新标签页打开）"
+          >
+            <Icon name="github" />
+            GitHub
+            <Icon name="arrow-right" className="external-arrow" />
+          </a>
         </nav>
       </header>
       <main

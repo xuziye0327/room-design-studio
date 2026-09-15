@@ -6,6 +6,25 @@ const proposals = [
   ['frame', '浅框装饰方案'],
 ] as const
 
+test('header links to the GitHub repository on gallery and proposal pages', async ({
+  page,
+}) => {
+  for (const route of ['/', '/#/proposal/twin']) {
+    await page.goto(route)
+    const navigation = page.getByRole('navigation', { name: '主导航' })
+    const github = navigation.getByRole('link', { name: /GitHub 项目仓库/ })
+    await expect(github).toBeVisible()
+    await expect(github).toBeInViewport()
+    await expect(github).toHaveAttribute(
+      'href',
+      'https://github.com/xuziye0327/room-design-studio',
+    )
+    await expect(github).toHaveAttribute('target', '_blank')
+    await expect(github).toHaveAttribute('rel', 'noopener noreferrer')
+    await expect(navigation.getByRole('link').last()).toHaveText('GitHub')
+  }
+})
+
 test('home shows three live thumbnails at the same camera scale', async ({
   page,
 }) => {
