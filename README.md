@@ -66,10 +66,12 @@ bun run preview  # 预览生产构建，默认 http://localhost:4173
 
 ### 设计文件
 
-- [方案总览](public/delivery/方案总览.md)
-- [双侧展示柜方案](public/delivery/双侧展示柜方案.md)
-- [薄层板展示方案](public/delivery/薄层板展示方案.md)
-- [浅框装饰方案](public/delivery/浅框装饰方案.md)
+设计说明与效果图保存在私有资源目录 `assets/delivery/`，仅供本地查阅，不随 Vite 构建发布。
+
+- [方案总览](assets/delivery/方案总览.md)
+- [双侧展示柜方案](assets/delivery/双侧展示柜方案.md)
+- [薄层板展示方案](assets/delivery/薄层板展示方案.md)
+- [浅框装饰方案](assets/delivery/浅框装饰方案.md)
 - [房间户型](public/room-layout.html)
 
 房间与桌子是设计基准，柜体、设备、电位及门窗包含示意尺寸。门洞 70 cm、南侧短墙 10 cm 为暂定值；窗台 90 cm、窗高 120 cm 为绘图假设。模型中的墙厚 8 cm、门高 210 cm、桌面板厚 4 cm、洞洞板厚 1.6 cm 用于视觉表达。
@@ -128,7 +130,7 @@ src/
     RoomCanvas.tsx            WebGL 2 画布及相机生命周期
     SceneViewer.tsx           交互控件与标注层
     ProposalSpecifications.tsx 尺寸与实施说明
-public/delivery/              原设计文件与效果图
+assets/delivery/              私有原设计文件与效果图（不参与构建发布）
 ```
 
 页面使用 MUI 卡片、按钮、分组切换、提示、折叠面板与表格；主题由 `src/theme.ts` 统一定义，布局与三维标注保留独立 CSS，并通过 MUI CSS 变量使用主题色。图标来自 Material Icons，媒体偏好由 MUI `useMediaQuery` 读取。

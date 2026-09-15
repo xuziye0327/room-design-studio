@@ -1,5 +1,4 @@
-import ArrowForward from '@mui/icons-material/ArrowForward'
-import { Alert, Link, Paper, Typography } from '@mui/material'
+import { Alert, Paper, Typography } from '@mui/material'
 import { DESK, ROOM } from '../data/proposals.ts'
 import type { Proposal } from '../data/proposals.ts'
 
@@ -99,17 +98,6 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
           </Typography>
         </div>
       </Alert>
-      <Link
-        className="document-link"
-        href={`/delivery/${proposal.name}.md`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <span>
-          阅读完整方案<span className="file-type">MD</span>
-        </span>
-        <ArrowForward className="icon" />
-      </Link>
     </Paper>
   )
 }

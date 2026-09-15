@@ -634,36 +634,6 @@
   line-height: 1.8;
   margin-top: 4px;
 }
-.document-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 16px;
-  min-height: 40px;
-  color: var(--accent);
-  font-size: 14px;
-}
-.document-link > span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.document-link > .icon {
-  width: 16px;
-  height: 16px;
-}
-.document-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.file-type {
-  font-size: 10px;
-  color: var(--muted);
-  border: 1px solid #ccd7e6;
-  padding: 1px 4px;
-  border-radius: 3px;
-}
 @media (max-width: 1100px) {
   .brand-subtitle {
     display: none;

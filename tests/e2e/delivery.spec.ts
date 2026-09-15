@@ -111,7 +111,7 @@ test('repeated gallery navigation releases GPU resources and keeps the active ca
   expect(errors).toEqual([])
 })
 
-test('delivery assets are local and available, including the source drawings', async ({
+test('site assets are local and available', async ({
   page,
   request,
   baseURL,
@@ -126,20 +126,17 @@ test('delivery assets are local and available, including the source drawings', a
     page.locator('.proposal-thumbnail canvas[data-ready="true"]'),
   ).toHaveCount(3)
   expect(external).toEqual([])
-  for (const path of [
-    '/room-layout.html',
-    '/delivery/方案总览.md',
-    '/delivery/双侧展示柜方案.md',
-    '/delivery/薄层板展示方案.md',
-    '/delivery/浅框装饰方案.md',
-    '/delivery/html/电位与右侧网络.html',
-  ]) {
-    const response = await request.get(path)
-    expect(response.ok(), path).toBe(true)
-  }
+  const response = await request.get('/room-layout.html')
+  expect(response.ok()).toBe(true)
   await page.getByRole('link', { name: '双侧展示柜方案，进入 3D 查看' }).click()
   const canvas = page.getByTestId('viewer-viewport').locator('canvas')
   await expect(canvas).toHaveAttribute('data-ready', 'true')
+  await expect(page.locator('a[href*="/delivery/"]')).toHaveCount(0)
+  await page.getByRole('button', { name: '电位定位', exact: true }).click()
+  await expect(
+    page.getByRole('heading', { name: '电位与网络', exact: true }),
+  ).toBeVisible()
+  await expect(page.locator('a[href*="/delivery/"]')).toHaveCount(0)
   const pixelRatios = await canvas.evaluate((element: HTMLCanvasElement) => ({
     x: element.width / element.clientWidth,
     y: element.height / element.clientHeight,

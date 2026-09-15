@@ -102,8 +102,8 @@ test('direct proposal URLs survive a refresh', async ({ page }) => {
     '浅框装饰方案',
   )
   await expect(
-    page.getByRole('link', { name: /阅读完整方案/ }),
-  ).toHaveAttribute('href', '/delivery/浅框装饰方案.md')
+    page.getByRole('heading', { name: '北墙设计', exact: true }),
+  ).toBeVisible()
 })
 
 test('fullscreen and reduced-motion controls are usable', async ({ page }) => {

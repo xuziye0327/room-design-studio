@@ -1,6 +1,5 @@
-import ArrowForward from '@mui/icons-material/ArrowForward'
 import Bolt from '@mui/icons-material/Bolt'
-import { Alert, Link, Paper, Typography } from '@mui/material'
+import { Alert, Paper, Typography } from '@mui/material'
 import { ELECTRICAL_POINTS, NETWORK_TRAY } from '../data/proposals.ts'
 
 export default function PowerDetails() {
@@ -94,15 +93,6 @@ export default function PowerDetails() {
           </Typography>
         </div>
       </Alert>
-      <Link
-        className="document-link"
-        href="/delivery/html/电位与右侧网络.html"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <span>查看电位设计原图</span>
-        <ArrowForward className="icon" />
-      </Link>
     </Paper>
   )
 }
