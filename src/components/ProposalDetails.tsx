@@ -1,19 +1,27 @@
+import ArrowForward from '@mui/icons-material/ArrowForward'
+import { Alert, Link, Paper, Typography } from '@mui/material'
 import { DESK, ROOM } from '../data/proposals.ts'
 import type { Proposal } from '../data/proposals.ts'
-import Icon from './Icon.tsx'
 
 export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
   return (
-    <aside
-      className="proposal-details glass-panel"
+    <Paper
+      component="aside"
+      className="proposal-details"
       aria-labelledby="details-heading"
     >
       <div className="details-heading">
         <span className="detail-number mono">{proposal.number}</span>
-        <h2 id="details-heading">北墙设计</h2>
+        <Typography component="h2" id="details-heading">
+          北墙设计
+        </Typography>
       </div>
-      <h3 className="detail-theme">{proposal.theme}</h3>
-      <p className="detail-description">{proposal.focus}</p>
+      <Typography component="h3" className="detail-theme">
+        {proposal.theme}
+      </Typography>
+      <Typography component="p" className="detail-description">
+        {proposal.focus}
+      </Typography>
       <div className="feature-metrics">
         <div>
           <strong className="mono">
@@ -31,7 +39,9 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
         </div>
       </div>
       <section className="detail-section" aria-labelledby="layout-heading">
-        <h3 id="layout-heading">共用空间尺度</h3>
+        <Typography component="h3" id="layout-heading">
+          共用空间尺度
+        </Typography>
         <dl className="detail-dimensions">
           <div>
             <dt>房间净尺寸</dt>
@@ -63,7 +73,9 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
         </dl>
       </section>
       <section className="detail-section" aria-labelledby="materials-heading">
-        <h3 id="materials-heading">材质与色彩</h3>
+        <Typography component="h3" id="materials-heading">
+          材质与色彩
+        </Typography>
         <div className="material-palette">
           <span>
             <i className="material-oak" />
@@ -79,16 +91,15 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
           </span>
         </div>
       </section>
-      <div className="measurement-note">
-        <Icon name="info" />
+      <Alert className="measurement-note" severity="warning" role="note">
         <div>
           <strong>尺寸与实施</strong>
-          <p>
+          <Typography component="p">
             柜体、门窗与电位为方案示意，须现场复尺与深化。椅子按收拢状态展示。
-          </p>
+          </Typography>
         </div>
-      </div>
-      <a
+      </Alert>
+      <Link
         className="document-link"
         href={`/delivery/${proposal.name}.md`}
         target="_blank"
@@ -97,8 +108,8 @@ export default function ProposalDetails({ proposal }: { proposal: Proposal }) {
         <span>
           阅读完整方案<span className="file-type">MD</span>
         </span>
-        <Icon name="arrow-right" />
-      </a>
-    </aside>
+        <ArrowForward className="icon" />
+      </Link>
+    </Paper>
   )
 }

@@ -1,11 +1,29 @@
+import Add from '@mui/icons-material/Add'
+import ArrowBack from '@mui/icons-material/ArrowBack'
+import ArrowForward from '@mui/icons-material/ArrowForward'
+import Bolt from '@mui/icons-material/Bolt'
+import Fullscreen from '@mui/icons-material/Fullscreen'
+import FullscreenExit from '@mui/icons-material/FullscreenExit'
+import LayersOutlined from '@mui/icons-material/LayersOutlined'
+import MouseOutlined from '@mui/icons-material/MouseOutlined'
+import Pause from '@mui/icons-material/Pause'
+import Remove from '@mui/icons-material/Remove'
+import RestartAlt from '@mui/icons-material/RestartAlt'
+import SquareFoot from '@mui/icons-material/SquareFoot'
+import Sync from '@mui/icons-material/Sync'
+import ViewInAr from '@mui/icons-material/ViewInAr'
+import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useEffect, useRef, useState } from 'react'
 import type { Proposal } from '../data/proposals.ts'
-import { useMediaQuery } from '../hooks/useMediaQuery.ts'
 import { SCENE_ANNOTATIONS } from '../scene/annotations.ts'
 import { VIEW_PRESETS } from '../scene/projection.ts'
 import type { ViewPreset } from '../scene/projection.ts'
 import type { ScenePresentation } from '../scene/room.ts'
-import Icon from './Icon.tsx'
 import RoomCanvas from './RoomCanvas.tsx'
 import type { CameraActions } from './RoomCanvas.tsx'
 
@@ -79,45 +97,51 @@ export default function SceneViewer({
   }
 
   return (
-    <section
+    <Paper
+      component="section"
       ref={container}
-      className="scene-viewer glass-panel"
+      className="scene-viewer"
       aria-label={`${proposal.name} 3D 查看器`}
       onFocusCapture={() => setAutoRotate(false)}
     >
       <div className="drawing-heading">
-        <h2>
-          <Icon name="cube" />
+        <Typography component="h2">
+          <ViewInAr className="icon" />
           3D 空间预览
-        </h2>
-        <div className="presentation-tabs" role="group" aria-label="展示内容">
-          <button
-            type="button"
-            aria-pressed={presentation === 'furniture'}
+        </Typography>
+        <ToggleButtonGroup
+          className="presentation-tabs"
+          exclusive
+          value={presentation}
+          aria-label="展示内容"
+        >
+          <ToggleButton
+            value="furniture"
             onClick={() => selectPresentation('furniture')}
           >
             家具布局
-          </button>
-          <button
-            type="button"
-            aria-pressed={presentation === 'electrical'}
+          </ToggleButton>
+          <ToggleButton
+            value="electrical"
             onClick={() => selectPresentation('electrical')}
           >
-            <Icon name="power" />
+            <Bolt className="icon" />
             电位定位
-          </button>
-        </div>
+          </ToggleButton>
+        </ToggleButtonGroup>
         <div className="drawing-actions">
           <span className="view-label">正交投影 · 单位 cm</span>
-          <button
-            type="button"
-            className="icon-button"
+          <IconButton
             aria-label={fullscreen ? '退出全屏' : '全屏查看'}
             title={fullscreen ? '退出全屏' : '全屏查看'}
             onClick={toggleFullscreen}
           >
-            <Icon name={fullscreen ? 'close' : 'expand'} />
-          </button>
+            {fullscreen ? (
+              <FullscreenExit className="icon" />
+            ) : (
+              <Fullscreen className="icon" />
+            )}
+          </IconButton>
         </div>
       </div>
       <div className="viewer-viewport" data-testid="viewer-viewport">
@@ -156,18 +180,18 @@ export default function SceneViewer({
             </div>
           ))}
         </div>
-        <div className="view-presets" role="group" aria-label="相机视角">
+        <ToggleButtonGroup
+          className="view-presets"
+          exclusive
+          value={view}
+          aria-label="相机视角"
+        >
           {(Object.keys(VIEW_PRESETS) as ViewPreset[]).map((key) => (
-            <button
-              key={key}
-              type="button"
-              aria-pressed={view === key}
-              onClick={() => selectView(key)}
-            >
+            <ToggleButton key={key} value={key} onClick={() => selectView(key)}>
               {VIEW_PRESETS[key].label}
-            </button>
+            </ToggleButton>
           ))}
-        </div>
+        </ToggleButtonGroup>
         <div className="view-compass" aria-label="北向指示">
           <span ref={compassElement}>
             N<i />
@@ -187,14 +211,12 @@ export default function SceneViewer({
         <div className="zoom-controls" role="group" aria-label="缩放与复位">
           {(
             [
-              { icon: 'plus', label: '放大', factor: 1.2 },
-              { icon: 'minus', label: '缩小', factor: 1 / 1.2 },
+              { Icon: Add, label: '放大', factor: 1.2 },
+              { Icon: Remove, label: '缩小', factor: 1 / 1.2 },
             ] as const
-          ).map(({ icon, label, factor }) => (
-            <button
-              key={icon}
-              type="button"
-              className="icon-button"
+          ).map(({ Icon, label, factor }) => (
+            <IconButton
+              key={label}
               aria-label={label}
               title={label}
               onClick={() => {
@@ -202,26 +224,23 @@ export default function SceneViewer({
                 actions.current?.zoom(factor)
               }}
             >
-              <Icon name={icon} />
-            </button>
+              <Icon className="icon" />
+            </IconButton>
           ))}
-          <button
-            type="button"
-            className="icon-button"
+          <IconButton
             aria-label="复位视角"
             title="复位视角"
             onClick={() => selectView('overview')}
           >
-            <Icon name="reset" />
-          </button>
+            <RestartAlt className="icon" />
+          </IconButton>
         </div>
       </div>
       <div className="viewer-toolbar">
         <div className="viewer-options">
-          <button
-            type="button"
-            className="tool-button"
-            aria-pressed={autoRotate}
+          <ToggleButton
+            value="auto-rotate"
+            selected={autoRotate}
             disabled={reducedMotion}
             title={
               reducedMotion
@@ -233,40 +252,40 @@ export default function SceneViewer({
               setView(null)
             }}
           >
-            <Icon name={autoRotate ? 'pause' : 'rotate'} />
+            {autoRotate ? (
+              <Pause className="icon" />
+            ) : (
+              <Sync className="icon" />
+            )}
             {autoRotate ? '暂停环绕' : '自动环绕'}
-          </button>
-          <button
-            type="button"
-            className="tool-button"
-            aria-pressed={showDimensions}
+          </ToggleButton>
+          <ToggleButton
+            value="dimensions"
+            selected={showDimensions}
             onClick={() => setShowDimensions(!showDimensions)}
           >
-            <Icon name="ruler" />
+            <SquareFoot className="icon" />
             尺寸标注
-          </button>
-          <button
-            type="button"
-            className="tool-button"
-            aria-pressed={cutaway}
+          </ToggleButton>
+          <ToggleButton
+            value="cutaway"
+            selected={cutaway}
             title="随视角隐藏近侧墙体及相应家具，显露对面布局"
             onClick={() => setCutaway(!cutaway)}
           >
-            <Icon name="layers" />
+            <LayersOutlined className="icon" />
             墙体剖切
-          </button>
+          </ToggleButton>
         </div>
         <div className="orbit-controls" role="group" aria-label="旋转视角">
           {(
             [
-              { icon: 'arrow-left', label: '向左旋转', angle: -Math.PI / 12 },
-              { icon: 'arrow-right', label: '向右旋转', angle: Math.PI / 12 },
+              { Icon: ArrowBack, label: '向左旋转', angle: -Math.PI / 12 },
+              { Icon: ArrowForward, label: '向右旋转', angle: Math.PI / 12 },
             ] as const
-          ).map(({ icon, label, angle }) => (
-            <button
-              key={icon}
-              type="button"
-              className="icon-button"
+          ).map(({ Icon, label, angle }) => (
+            <IconButton
+              key={label}
               aria-label={`${label} 15 度`}
               title={`${label} 15°`}
               onClick={() => {
@@ -274,8 +293,8 @@ export default function SceneViewer({
                 actions.current?.orbit(angle)
               }}
             >
-              <Icon name={icon} />
-            </button>
+              <Icon className="icon" />
+            </IconButton>
           ))}
         </div>
       </div>
@@ -292,8 +311,8 @@ export default function SceneViewer({
           <span>连线为连接示意</span>
         </div>
       )}
-      <p className="interaction-hint">
-        <Icon name="mouse" />
+      <Typography component="p" className="interaction-hint">
+        <MouseOutlined className="icon" />
         <span>
           {touchInput ? (
             '单指旋转 · 双指缩放与平移'
@@ -304,12 +323,12 @@ export default function SceneViewer({
             </>
           )}
         </span>
-      </p>
+      </Typography>
       {fullscreenMessage && (
-        <p className="interaction-hint" role="status">
+        <Typography component="p" className="interaction-hint" role="status">
           {fullscreenMessage}
-        </p>
+        </Typography>
       )}
-    </section>
+    </Paper>
   )
 }

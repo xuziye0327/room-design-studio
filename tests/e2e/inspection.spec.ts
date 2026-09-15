@@ -74,7 +74,10 @@ test('source dimensions and all 19 electrical locations are available in the spe
   page,
 }) => {
   await page.goto('/#/proposal/frame')
-  await page.locator('.specifications > summary').click()
+  const specifications = page.getByRole('button', { name: /尺寸与实施说明/ })
+  await expect(specifications).toHaveAttribute('aria-expanded', 'false')
+  await specifications.click()
+  await expect(specifications).toHaveAttribute('aria-expanded', 'true')
   const tables = page.locator('.table-scroll table')
   await expect(tables).toHaveCount(2)
   await expect(tables.first()).toContainText('60 × 1.6 × 30')
@@ -91,6 +94,12 @@ test('source dimensions and all 19 electrical locations are available in the spe
     '0',
     '55',
   ])
+  await specifications.press('Enter')
+  await expect(specifications).toHaveAttribute('aria-expanded', 'false')
+  await expect(tables.first()).toBeHidden()
+  await specifications.press('Space')
+  await expect(specifications).toHaveAttribute('aria-expanded', 'true')
+  await expect(tables.first()).toBeVisible()
   await expect(page.locator('.implementation-notes')).toContainText(
     '门洞 70 cm',
   )

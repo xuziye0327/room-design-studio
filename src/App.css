@@ -10,11 +10,6 @@
   letter-spacing: 0.08em;
   margin-bottom: 12px;
 }
-h1 {
-  font-weight: 650;
-  letter-spacing: -0.04em;
-  line-height: 1.25;
-}
 .scene-viewer {
   min-width: 0;
   padding: 22px;
@@ -37,17 +32,13 @@ h1 {
   align-items: center;
   gap: 10px;
 }
-.tool-button:disabled {
-  color: var(--muted);
-  background: var(--page);
-  opacity: 0.65;
-}
 .drawing-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 18px;
+  flex-wrap: wrap;
 }
 .drawing-heading h2 {
   display: flex;
@@ -101,34 +92,10 @@ h1 {
   position: absolute;
   top: 16px;
   left: 16px;
-  display: flex;
-  gap: 2px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 3px;
-  background: rgb(255 255 255 / 90%);
   box-shadow: 0 3px 10px #17233b04;
 }
 .view-presets button {
   min-width: 50px;
-  min-height: 36px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  transition:
-    background 160ms,
-    color 160ms;
-}
-.view-presets button:hover {
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.view-presets button[aria-pressed='true'] {
-  color: var(--accent);
-  background: var(--accent-soft);
-  font-weight: 600;
 }
 .view-compass {
   position: absolute;
@@ -196,29 +163,6 @@ h1 {
   border-radius: 10px;
   background: rgb(255 255 255 / 92%);
 }
-.icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  border-radius: 6px;
-  color: var(--muted);
-  transition:
-    color 160ms,
-    background 160ms;
-}
-.icon-button:hover {
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.icon-button .icon {
-  width: 18px;
-  height: 18px;
-}
 .viewer-toolbar {
   display: flex;
   align-items: center;
@@ -232,34 +176,9 @@ h1 {
   flex-wrap: wrap;
   gap: 8px;
 }
-.tool-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  border: 1px solid var(--line);
-  background: rgb(255 255 255 / 60%);
-  border-radius: 8px;
-  padding: 9px 12px;
-  font-size: 12px;
-  min-height: 40px;
-  transition:
-    background 160ms,
-    color 160ms,
-    border-color 160ms;
-}
-.tool-button .icon {
+.viewer-options .icon {
   width: 16px;
   height: 16px;
-}
-.tool-button:hover {
-  border-color: #b7cbee;
-  color: var(--accent);
-}
-.tool-button[aria-pressed='true'] {
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-color: #cfddf5;
 }
 .orbit-controls {
   display: flex;
@@ -309,14 +228,6 @@ h1 {
     left: 22px;
     bottom: 55px;
     transform: none;
-  }
-  .icon-button {
-    width: 44px;
-    height: 44px;
-  }
-  .tool-button {
-    padding: 9px;
-    min-height: 44px;
   }
   .keyboard-hint {
     display: none;

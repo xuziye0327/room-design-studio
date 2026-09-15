@@ -1,41 +1,9 @@
-.drawing-heading {
-  flex-wrap: wrap;
-}
 .presentation-tabs {
-  display: flex;
-  align-items: center;
-  gap: 3px;
   margin-inline: auto;
-  padding: 3px;
-  background: #edf1f780;
-  border: 1px solid #dfe6f0;
-  border-radius: 8px;
 }
-.presentation-tabs button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 7px 10px;
-  min-height: 32px;
-  border: 0;
-  border-radius: 5px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 11px;
-}
-.presentation-tabs button .icon {
+.presentation-tabs .icon {
   width: 13px;
   height: 13px;
-}
-.presentation-tabs button[aria-pressed='true'] {
-  color: var(--accent);
-  background: white;
-  font-weight: 550;
-  box-shadow: 0 1px 4px #17233b08;
-}
-.presentation-tabs button:hover {
-  color: var(--accent);
 }
 .world-labels {
   position: absolute;
@@ -189,18 +157,16 @@
 .specifications {
   margin-top: 24px;
 }
-.specifications > summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+.specifications .MuiAccordionSummary-root {
   padding: 20px 24px;
-  list-style: none;
-  cursor: pointer;
   border-radius: 20px;
 }
-.specifications > summary::-webkit-details-marker {
-  display: none;
+.specifications .MuiAccordionSummary-content {
+  margin: 0;
+}
+.specifications .Mui-expanded.MuiAccordionSummary-root {
+  border-bottom: 1px solid var(--line);
+  border-radius: 20px 20px 0 0;
 }
 .specification-title {
   display: flex;
@@ -223,19 +189,6 @@
   color: var(--muted);
   margin-top: 3px;
 }
-.specifications > summary > .icon {
-  width: 17px;
-  height: 17px;
-  color: var(--muted);
-  transition: transform 160ms;
-}
-.specifications[open] > summary > .icon {
-  transform: rotate(90deg);
-}
-.specifications[open] > summary {
-  border-bottom: 1px solid var(--line);
-  border-radius: 20px 20px 0 0;
-}
 .specification-content {
   padding: 24px;
 }
@@ -256,13 +209,6 @@
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-.table-scroll table {
-  width: 100%;
-  min-width: 570px;
-  border-collapse: collapse;
-  font-size: 12px;
-  text-align: left;
-}
 .table-scroll caption {
   padding: 12px 16px;
   border-bottom: 1px solid var(--line);
@@ -271,19 +217,8 @@
   font-size: 12px;
   font-weight: 550;
 }
-.table-scroll th,
-.table-scroll td {
-  padding: 11px 16px;
-  border-bottom: 1px solid var(--line);
-}
 .table-scroll thead th {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 500;
   background: #f5f8fc;
-}
-.table-scroll tbody th {
-  font-weight: 400;
 }
 .table-scroll tbody tr:last-child th,
 .table-scroll tbody tr:last-child td {
@@ -327,9 +262,6 @@
 .implementation-notes {
   padding: 20px;
   margin-top: 24px;
-  border: 1px solid #eadbc2;
-  border-radius: 10px;
-  background: var(--note);
 }
 .implementation-notes h3 {
   font-size: 13px;
@@ -345,13 +277,10 @@
   line-height: 1.8;
 }
 @media (max-width: 760px) {
-  .presentation-tabs button {
-    min-height: 38px;
-  }
   .viewer-options {
     gap: 6px;
   }
-  .specifications > summary {
+  .specifications .MuiAccordionSummary-root {
     padding: 18px 20px;
   }
   .specification-content {

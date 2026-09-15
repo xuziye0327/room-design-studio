@@ -1,33 +1,19 @@
 :root {
-  font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  color: #17233b;
-  background: #f5f7fb;
-  font-size: 16px;
-  line-height: 1.6;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   color-scheme: light;
-  --page: #f5f7fb;
-  --paper: #fff;
-  --ink: #17233b;
-  --muted: #4c5a70;
-  --line: #e2e8f1;
-  --accent: #2859d6;
-  --accent-soft: #edf3ff;
-  --window: #087c91;
-  --door: #9a631c;
-  --note: #fff7e9;
-  --glass: rgb(255 255 255 / 64%);
-  --glass-border: rgb(255 255 255 / 88%);
-  --shadow: 0 16px 48px #344c8c0d, inset 0 1px 0 #fff;
-}
-
-* {
-  box-sizing: border-box;
+  --page: var(--mui-palette-background-default);
+  --ink: var(--mui-palette-text-primary);
+  --muted: var(--mui-palette-text-secondary);
+  --line: var(--mui-palette-divider);
+  --accent: var(--mui-palette-primary-main);
+  --accent-soft: var(--mui-palette-action-selected);
+  --window: var(--mui-palette-info-main);
+  --door: var(--mui-palette-warning-main);
+  --note: var(--mui-palette-warning-light);
 }
 body {
-  margin: 0;
   min-width: 320px;
   min-height: 100svh;
   background:
@@ -45,31 +31,15 @@ dl,
 dd {
   margin: 0;
 }
-a {
-  color: inherit;
-  text-decoration: none;
-}
-button {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
 button,
 a {
   -webkit-tap-highlight-color: transparent;
-}
-button:disabled {
-  cursor: default;
-}
-button,
-a,
-summary {
   touch-action: manipulation;
 }
 button:focus-visible,
 a:focus-visible,
-summary:focus-visible,
-canvas:focus-visible {
+canvas:focus-visible,
+.Mui-focusVisible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
@@ -86,13 +56,6 @@ canvas:focus-visible {
   height: 20px;
   flex: 0 0 auto;
 }
-.glass-panel {
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  background: var(--glass);
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
-}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -100,12 +63,5 @@ canvas:focus-visible {
     scroll-behavior: auto !important;
     transition-duration: 0s !important;
     animation-duration: 0s !important;
-  }
-}
-@media (prefers-reduced-transparency: reduce) {
-  .glass-panel {
-    background: var(--paper);
-    backdrop-filter: none;
-    border-color: var(--line);
   }
 }

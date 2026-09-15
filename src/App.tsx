@@ -1,5 +1,13 @@
+import ArrowBack from '@mui/icons-material/ArrowBack'
+import ArrowForward from '@mui/icons-material/ArrowForward'
+import GitHub from '@mui/icons-material/GitHub'
+import GridView from '@mui/icons-material/GridView'
+import ViewInAr from '@mui/icons-material/ViewInAr'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 import { useEffect, useRef, useSyncExternalStore } from 'react'
-import Icon from './components/Icon.tsx'
 import ProposalGallery from './components/ProposalGallery.tsx'
 import ProposalView from './components/ProposalView.tsx'
 import { getProposal, PROPOSALS } from './data/proposals.ts'
@@ -42,7 +50,7 @@ function App() {
 
   return (
     <>
-      <a
+      <Link
         className="skip-link"
         href="#main-content"
         onClick={(event) => {
@@ -51,38 +59,44 @@ function App() {
         }}
       >
         跳至主要内容
-      </a>
+      </Link>
       <header className="site-header">
-        <a className="site-brand" href="#/" aria-label="空间方案首页">
+        <Link
+          className="site-brand"
+          href="#/"
+          aria-label="空间方案首页"
+          underline="none"
+        >
           <span className="brand-mark">
-            <Icon name="cube" />
+            <ViewInAr className="icon" />
           </span>
           <span>
             空间方案<span className="brand-subtitle">双人办公空间</span>
           </span>
-        </a>
+        </Link>
         <nav className="site-nav" aria-label="主导航">
-          <a href="#/" aria-current={proposal ? undefined : 'page'}>
+          <Link href="#/" aria-current={proposal ? undefined : 'page'}>
             方案总览
-          </a>
-          <a href="/room-layout.html" target="_blank" rel="noreferrer">
-            <Icon name="floorplan" />
+          </Link>
+          <Link href="/room-layout.html" target="_blank" rel="noreferrer">
+            <GridView className="icon" />
             房间户型
-            <Icon name="arrow-right" className="external-arrow" />
-          </a>
-          <a
+            <ArrowForward className="icon external-arrow" />
+          </Link>
+          <Link
             href="https://github.com/xuziye0327/room-design-studio"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub 项目仓库（在新标签页打开）"
           >
-            <Icon name="github" />
+            <GitHub className="icon" />
             GitHub
-            <Icon name="arrow-right" className="external-arrow" />
-          </a>
+            <ArrowForward className="icon external-arrow" />
+          </Link>
         </nav>
       </header>
-      <main
+      <Box
+        component="main"
         ref={main}
         id="main-content"
         tabIndex={-1}
@@ -91,30 +105,33 @@ function App() {
         {proposal ? (
           <>
             <div className="breadcrumb">
-              <a href="#/" aria-label="返回方案总览">
-                <Icon name="arrow-left" />
+              <Link href="#/" aria-label="返回方案总览">
+                <ArrowBack className="icon" />
                 全部方案
-              </a>
+              </Link>
               <span>/</span>
               <span>方案 {proposal.number}</span>
             </div>
             <header className="detail-page-heading">
               <div>
-                <p className="eyebrow">
+                <Typography component="p" className="eyebrow">
                   方案 {proposal.number} · {proposal.theme}
-                </p>
-                <h1>{proposal.name}</h1>
+                </Typography>
+                <Typography component="h1" variant="h1">
+                  {proposal.name}
+                </Typography>
               </div>
               <nav className="proposal-switcher" aria-label="切换设计方案">
                 {PROPOSALS.map((item) => (
-                  <a
+                  <Button
                     key={item.id}
                     href={`#/proposal/${item.id}`}
+                    variant={proposal.id === item.id ? 'contained' : 'text'}
                     aria-current={proposal.id === item.id ? 'page' : undefined}
                   >
                     <span className="mono">{item.number}</span>
                     {item.shortName}
-                  </a>
+                  </Button>
                 ))}
               </nav>
             </header>
@@ -123,13 +140,15 @@ function App() {
         ) : (
           <ProposalGallery />
         )}
-      </main>
+      </Box>
       <footer className="site-footer">
-        <p>仅作空间与布局参考，非施工图纸</p>
-        <p>
+        <Typography variant="inherit" component="p">
+          仅作空间与布局参考，非施工图纸
+        </Typography>
+        <Typography variant="inherit" component="p">
           <span className="footer-dot" />
           标准单位 cm<span className="footer-separator">/</span>等比例三维建模
-        </p>
+        </Typography>
       </footer>
     </>
   )

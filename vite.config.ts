@@ -23,6 +23,7 @@ export default defineConfig({
               test: /node_modules[\\/]three[\\/]build[\\/]three\.core\.js$/,
             },
             { name: 'three-renderer', test: /node_modules[\\/]three[\\/]/ },
+            { name: 'mui', test: /node_modules[\\/](?:@mui|@emotion)[\\/]/ },
             { name: 'vendor', test: /node_modules[\\/]/ },
           ],
         },

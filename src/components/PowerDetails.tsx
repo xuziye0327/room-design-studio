@@ -1,26 +1,33 @@
+import ArrowForward from '@mui/icons-material/ArrowForward'
+import Bolt from '@mui/icons-material/Bolt'
+import { Alert, Link, Paper, Typography } from '@mui/material'
 import { ELECTRICAL_POINTS, NETWORK_TRAY } from '../data/proposals.ts'
-import Icon from './Icon.tsx'
 
 export default function PowerDetails() {
   const officeCount = ELECTRICAL_POINTS.filter(
     (point) => point.circuit === 'above-desk' || point.circuit === 'below-desk',
   ).length
   return (
-    <aside
-      className="proposal-details glass-panel"
+    <Paper
+      component="aside"
+      className="proposal-details"
       aria-labelledby="power-heading"
     >
       <div className="details-heading">
         <span className="detail-number power-number">
-          <Icon name="power" />
+          <Bolt className="icon" />
         </span>
-        <h2 id="power-heading">电位与网络</h2>
+        <Typography component="h2" id="power-heading">
+          电位与网络
+        </Typography>
       </div>
-      <h3 className="detail-theme">三套方案，共用电位</h3>
-      <p className="detail-description">
+      <Typography component="h3" className="detail-theme">
+        三套方案，共用电位
+      </Typography>
+      <Typography component="p" className="detail-description">
         桌面半透明显示，便于核对墙插与桌下设备。以西北角地面为原点，x 向东、y
         向南，H 为离地中心高度。
-      </p>
+      </Typography>
       <div className="feature-metrics">
         <div>
           <strong className="mono">
@@ -37,7 +44,9 @@ export default function PowerDetails() {
         </div>
       </div>
       <section className="detail-section" aria-labelledby="socket-heading">
-        <h3 id="socket-heading">桌上与桌下</h3>
+        <Typography component="h3" id="socket-heading">
+          桌上与桌下
+        </Typography>
         <dl className="detail-dimensions">
           <div>
             <dt>桌上 · 左右各 3 个</dt>
@@ -60,7 +69,9 @@ export default function PowerDetails() {
         </dl>
       </section>
       <section className="detail-section" aria-labelledby="network-heading">
-        <h3 id="network-heading">右侧单口上联，两端分线</h3>
+        <Typography component="h3" id="network-heading">
+          右侧单口上联，两端分线
+        </Typography>
         <div className="network-flow">
           <span>家中路由器 / 弱电箱</span>
           <span>W1 · 右侧网络面板</span>
@@ -70,29 +81,28 @@ export default function PowerDetails() {
             <span>右侧主机</span>
           </div>
         </div>
-        <p className="detail-footnote">
+        <Typography component="p" className="detail-footnote">
           B4 为交换机常供电；托盘底部 H{NETWORK_TRAY.bottom}{' '}
           cm，保留通风及检修空间。
-        </p>
+        </Typography>
       </section>
-      <div className="measurement-note">
-        <Icon name="info" />
+      <Alert className="measurement-note" severity="warning" role="note">
         <div>
           <strong>电气深化</strong>
-          <p>
+          <Typography component="p">
             强弱电分管、分底盒。连线仅表示连接关系；负荷、回路、接地与保护配置由电工确认。
-          </p>
+          </Typography>
         </div>
-      </div>
-      <a
+      </Alert>
+      <Link
         className="document-link"
         href="/delivery/html/电位与右侧网络.html"
         target="_blank"
         rel="noreferrer"
       >
         <span>查看电位设计原图</span>
-        <Icon name="arrow-right" />
-      </a>
-    </aside>
+        <ArrowForward className="icon" />
+      </Link>
+    </Paper>
   )
 }

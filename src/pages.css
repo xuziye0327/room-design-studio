@@ -314,14 +314,11 @@
   gap: 6px;
   margin-top: 14px;
 }
-.proposal-tags > span {
-  padding: 3px 8px;
-  border-radius: 5px;
+.proposal-tags .MuiChip-root {
   background: #eaf0f4;
   color: #485f6b;
-  font-size: 10px;
 }
-.proposal-tags > span:last-child {
+.proposal-tags .MuiChip-root:last-child {
   background: #f0ede6;
   color: #766348;
 }
@@ -475,7 +472,7 @@
   display: flex;
   gap: 3px;
   padding: 4px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   border-radius: 10px;
   background: rgb(255 255 255 / 55%);
 }
@@ -487,24 +484,9 @@
   border-radius: 7px;
   font-size: 11px;
   white-space: nowrap;
-  min-height: 40px;
-  color: var(--muted);
 }
-.proposal-switcher a > span {
+.proposal-switcher .mono {
   font-size: 10px;
-  color: #607693;
-}
-.proposal-switcher a[aria-current='page'] {
-  background: white;
-  color: var(--accent);
-  box-shadow: 0 2px 8px #344c8c09;
-  font-weight: 550;
-}
-.proposal-switcher a[aria-current='page'] > span {
-  color: var(--accent);
-}
-.proposal-switcher a:hover {
-  color: var(--accent);
 }
 .detail-layout {
   display: grid;
@@ -641,20 +623,6 @@
 }
 .material-green {
   background: #8d9e91;
-}
-.measurement-note {
-  display: flex;
-  gap: 8px;
-  padding: 13px 12px;
-  border: 1px solid #ecd9b8;
-  border-radius: 10px;
-  background: var(--note);
-}
-.measurement-note > .icon {
-  color: var(--door);
-  width: 14px;
-  height: 14px;
-  margin-top: 3px;
 }
 .measurement-note strong {
   font-size: 11px;
@@ -987,7 +955,7 @@
   .shared-conditions {
     margin-top: 22px;
   }
-  .proposal-switcher a > span {
+  .proposal-switcher .mono {
     display: none;
   }
   .proposal-details {

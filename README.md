@@ -1,6 +1,6 @@
 # 空间方案 · 3D 设计预览
 
-双人办公空间的交互式方案展示，使用当前 Vite、React 19、TypeScript、Three.js 与 React Three Fiber 项目实现。
+双人办公空间的交互式方案展示，使用 Vite、React 19、TypeScript、Material UI、Emotion、Three.js 与 React Three Fiber 实现。
 
 首页以同机位、同尺度的三张真实 3D 缩略图展示 **双侧展示柜、薄层板展示、浅框装饰** 三套方案。点击卡片进入 360° 查看页，查看北墙、共用南墙、尺寸及电位布局。页面视觉沿用 `public/room-layout.html` 的浅色渐变、玻璃面板与蓝色重点。
 
@@ -108,6 +108,8 @@ PLAYWRIGHT_BASE_URL=http://127.0.0.1:4173 npm run test:e2e
 
 ```text
 src/
+  main.tsx                   React 入口、ThemeProvider 与 CssBaseline
+  theme.ts                   MUI 配色、字体与基础控件样式
   data/proposals.ts           房间、设备、三份方案与电位的厘米数据
   scene/
     room.ts                  房间与场景图层
@@ -127,6 +129,8 @@ src/
     ProposalSpecifications.tsx 尺寸与实施说明
 public/delivery/              原设计文件与效果图
 ```
+
+页面使用 MUI 卡片、按钮、分组切换、提示、折叠面板与表格；主题由 `src/theme.ts` 统一定义，布局与三维标注保留独立 CSS，并通过 MUI CSS 变量使用主题色。图标来自 Material Icons，媒体偏好由 MUI `useMediaQuery` 读取。
 
 场景的几何、木纹、屏幕画面与装饰画由项目代码生成。缩略图按需绘制，交互场景在变化时重绘；场景退出时释放几何、材质、纹理与控制器。
 
