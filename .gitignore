@@ -31,3 +31,7 @@ dist-ssr
 /playwright/.auth/
 
 .temp
+
+# Local agent configuration
+/.agents/
+/AGENTS.md
